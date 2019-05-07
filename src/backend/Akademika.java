@@ -6,6 +6,13 @@ public abstract class Akademika {
     protected String password;
     protected Database db;
     
+    public Akademika(String nomorInduk, String nama, String password) {
+        this.db = new Database();
+        this.nomorInduk = nomorInduk;
+        this.nama = nama;
+        this.password = password;
+    }
+    
     public String getNomorInduk() {
         return this.nomorInduk;
     }
@@ -18,11 +25,6 @@ public abstract class Akademika {
         return this.password;
     }
     
-    public void updatePassword(String passwordLama, String passwordBaru) {
-        if(passwordLama.equals(this.password)){
-            this.password = passwordBaru;
-        }
-    }
-    
+    public abstract void updatePassword(String passwordLama, String passwordBaru);
     public abstract void updateData(String nomorInduk, String nama, int c, String password);
 }

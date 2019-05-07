@@ -36,6 +36,9 @@ public class Database {
         }
     }
    
+    public Connection getConnection() {
+        return this.connect;
+    }
     
     public void runQuery (String query) {
         try {
