@@ -1,6 +1,6 @@
 package backend;
 
-public abstract class Akademika {
+public abstract class Akademika implements Account {
     protected String nomorInduk;
     protected String nama;
     protected String password;
@@ -25,6 +25,5 @@ public abstract class Akademika {
         return this.password;
     }
     
-    public abstract void updatePassword(String passwordLama, String passwordBaru);
     public abstract void updateData(String nomorInduk, String nama, int c, String password);
 }
