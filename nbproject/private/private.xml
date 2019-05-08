@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Latihan/Perangkat%20Lunak%20Perencanaan%20Studi/src/perangkat/lunak/perencanaan/studi/WelcomePage.java</file>
-            <file>file:/D:/Latihan/Perangkat%20Lunak%20Perencanaan%20Studi/src/perangkat/lunak/perencanaan/studi/MainForm.java</file>
-            <file>file:/D:/Latihan/Perangkat%20Lunak%20Perencanaan%20Studi/src/perangkat/lunak/perencanaan/studi/PerangkatLunakPerencanaanStudi.java</file>
-            <file>file:/D:/Latihan/Perangkat%20Lunak%20Perencanaan%20Studi/src/perangkat/lunak/perencanaan/studi/Database.java</file>
-            <file>file:/D:/Latihan/Perangkat%20Lunak%20Perencanaan%20Studi/src/perangkat/lunak/perencanaan/studi/Security.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/MataKuliah.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/frontend/PanelDaftar.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/AmbilMataKuliah.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/frontend/MainForm.java</file>
         </group>
     </open-files>
 </project-private>

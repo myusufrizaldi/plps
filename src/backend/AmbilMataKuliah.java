@@ -10,28 +10,31 @@ public class AmbilMataKuliah {
     public AmbilMataKuliah(MataKuliah mataKuliah, String nilai) {
         this.mataKuliah = mataKuliah;
         this.nilai = nilai;
+        this.calculatePoint();
     }
     
-    public void convertnilai (){
-        double score;
-        if( nilai == "A"){
+    public double convertNilai (){
+        double score = 0;
+        if( this.nilai.equals("A")){
             score = 4;
-        } else if( nilai == "AB" ){
+        } else if( this.nilai.equals("AB") ){
             score = 3.5;
-        } else if( nilai == "B" ){
+        } else if( this.nilai.equals("B")){
             score = 3;
-        } else if( nilai == "BC" ){
+        } else if( this.nilai.equals("BC") ){
             score = 2.5;
-        } else if( nilai == "C" ){
+        } else if( this.nilai.equals("C") ){
             score = 2;
-        } else if( nilai == "D" ){
+        } else if( this.nilai.equals("D") ){
             score = 1;        
-        } else if( nilai == "E" ){
-            score = 0;
         }
+        
+        return score;
     }
     
     public void calculatePoint() {
-        //this.logicPoint = (double)this.nilai + this.mataKuliah.getLogicPointRate();
+        this.logicPoint = this.convertNilai() * this.mataKuliah.getLogicPointRate();
+        this.mathPoint = this.convertNilai() * this.mataKuliah.getMathPointRate();
+        this.memoryPoint = this.convertNilai() * this.mataKuliah.getMemoryPointRate();
     }
 }

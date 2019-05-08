@@ -1,9 +1,12 @@
 package backend;
 import backend.Security;
+import frontend.MsgBox;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Database {
     
@@ -32,7 +35,7 @@ public class Database {
             this.importTabelMahasiswa();
             
         } catch (ClassNotFoundException | SQLException ex){
-            System.out.println("Initiate Database Error");
+            JOptionPane.showMessageDialog(null, "Inisiasi Database Error");
         }
     }
    
@@ -44,7 +47,15 @@ public class Database {
         try {
             result = this.statement.executeQuery(query);
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
+    public void execute (String query) {
+        try {
+            this.statement.execute(query);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
     }
     
@@ -60,7 +71,7 @@ public class Database {
             }
             
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, ex.toString());
         }
     }
     
@@ -74,22 +85,24 @@ public class Database {
                 this.tabelMahasiswa.put(nim, password);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, ex.toString());
         }
     }
     
-    public void login (String nomorInduk, String password) {
-        try{            
+    public LoginJSON login (String nomorInduk, String password) {
+        try{         
+            
             password = this.hashing.getHashed(this.hashing.getHashed(password));
-            System.out.println(password);
             if(this.tabelMahasiswa.containsKey(nomorInduk)){
                 if(this.tabelMahasiswa.get(nomorInduk).equals(password)){
                     this.runQuery("SELECT * FROM mahasiswa WHERE nim='" + nomorInduk + "' AND password='" + password + "';");
                     if(this.result.next()){
-                        System.out.println("Selamat datang " + this.result.getString("nama") + "!");
+                        LoginJSON json = new LoginJSON(true, "Selamat datang " + this.result.getString("nama") + "!");
+                        return json;
                     }
                 }else{
-                    System.out.println("Maaf, NIM atau Password salah.");
+                    LoginJSON json = new LoginJSON(false, "Maaf, NIM atau Password salah.");
+                    return json;
                 }       
             }else{
                 if(this.tabelDosen.containsKey(nomorInduk)){
@@ -97,28 +110,23 @@ public class Database {
                         this.runQuery("SELECT * FROM dosen WHERE nip='" + nomorInduk + "' AND password='" + password + "';");
                         
                         if(this.result.next()){
-                            System.out.println("Selamat datang Bapak/Ibu " + this.result.getString("nama") + "!");
+                            LoginJSON json = new LoginJSON(true, "Selamat datang Bapak/Ibu " + this.result.getString("nama") + "!");
+                            return json;
                         }
                     }else{
-                        System.out.println("Maaf, NIP atau Password salah.");
+                        LoginJSON json = new LoginJSON(true, "Maaf, NIP atau Password salah.");
+                        return json;
                     }
                 }
             }
             
         } catch (SQLException ex) {
-            System.out.println("Kesalahan Terjadi: Login");
+            LoginJSON json = new LoginJSON(true, "Kesalahan Terjadi: Login");
+            return json;
         }
+        
+        return null;
     }
     
-    public void printAllResult (){
-        
-        try {
-            while(this.result.next()){
-                System.out.println(this.result.getString("no_rekening"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
 }
