@@ -89,7 +89,7 @@ public class Database {
         }
     }
     
-    public ReturnJSON login (String nomorInduk, String password) {
+    public ReturnLoginJSON login (String nomorInduk, String password) {
         try{         
             
             password = this.hashing.getHashed(this.hashing.getHashed(password));
@@ -97,14 +97,14 @@ public class Database {
                 if(this.tabelMahasiswa.get(nomorInduk).equals(password)){
                     this.runQuery("SELECT * FROM mahasiswa WHERE nim='" + nomorInduk + "' AND password='" + password + "';");
                     if(this.result.next()){
-                        ReturnJSON json = new ReturnJSON(true, "Selamat datang " + this.result.getString("nama") + "!");
+                        ReturnLoginJSON json = new ReturnLoginJSON(true, "Selamat datang " + this.result.getString("nama") + "!", new Mahasiswa(this.result.getString("nim"), this.result.getString("nama"), Integer.parseInt(this.result.getString("semester_terakhir")), this.result.getString("password"), Double.parseDouble(this.result.getString("logic_point")), Double.parseDouble(this.result.getString("math_point")), Double.parseDouble(this.result.getString("memory_point"))));
                         return json;
                     }else{
-                            ReturnJSON json = new ReturnJSON(false, "Maaf, NIM atau Password salah.");
+                            ReturnLoginJSON json = new ReturnLoginJSON(false, "Maaf, NIM atau Password salah.", new Mahasiswa("0", "", 0, "", 0.0, 0.0, 0.0));
                             return json;
                         }
                 }else{
-                    ReturnJSON json = new ReturnJSON(false, "Maaf, NIM atau Password salah.");
+                    ReturnLoginJSON json = new ReturnLoginJSON(false, "Maaf, NIM atau Password salah.", new Mahasiswa("0", "", 0, "", 0.0, 0.0, 0.0));
                     return json;
                 }       
             }else{
@@ -113,40 +113,40 @@ public class Database {
                         this.runQuery("SELECT * FROM dosen WHERE nip='" + nomorInduk + "' AND password='" + password + "';");
                         
                         if(this.result.next()){
-                            ReturnJSON json = new ReturnJSON(true, "Selamat datang Bapak/Ibu " + this.result.getString("nama") + "!");
+                            ReturnLoginJSON json = new ReturnLoginJSON(true, "Selamat datang Bapak/Ibu " + this.result.getString("nama") + "!", new Dosen(this.result.getString("nip"), this.result.getString("nama"), Integer.parseInt(this.result.getString("id_fokus")), this.result.getString("password")));
                             return json;
                         }else{
-                            ReturnJSON json = new ReturnJSON(false, "Maaf, NIP atau Password salah.");
+                            ReturnLoginJSON json = new ReturnLoginJSON(false, "Maaf, NIP atau Password salah.", new Dosen("0", "", 0, ""));
                             return json;
                         }
                     }else{
-                        ReturnJSON json = new ReturnJSON(false, "Maaf, NIP atau Password salah.");
+                        ReturnLoginJSON json = new ReturnLoginJSON(false, "Maaf, NIP atau Password salah.", new Dosen("0", "", 0, ""));
                         return json;
                     }
                 }else{
-                    ReturnJSON json = new ReturnJSON(false, "Maaf, Nomor Induk tidak terdaftar.");
+                    ReturnLoginJSON json = new ReturnLoginJSON(false, "Maaf, Nomor Induk tidak terdaftar.", new Dosen("0", "", 0, ""));
                     return json;
                 }
             }
             
         } catch (SQLException ex) {
-            ReturnJSON json = new ReturnJSON(false, "Oops, kesalahan telah terjadi pada sistem: Login");
+            ReturnLoginJSON json = new ReturnLoginJSON(false, "Oops, kesalahan telah terjadi pada sistem: Login", new Dosen("0", "", 0, ""));
             return json;
         }
     }
     
-    public ReturnJSON daftar(String nama, String nim, String password) {
+    public ReturnLoginJSON daftar(String nama, String nim, String password) {
         if(nama.length() > 1 && nim.length() >= 8 && password.length() >= 8){
             try {
-                this.execute("INSERT INTO mahasiswa (nim, nama, semester_terakhir, password) VALUES (" + MySQLUtils.quote(this.getConnection(), nim) + ", " + MySQLUtils.quote(this.getConnection(), nama) + ", 0, " + MySQLUtils.quote(this.getConnection(), this.hashing.getHashed(this.hashing.getHashed(password))) + ");");
-                ReturnJSON json = new ReturnJSON(true, "Berhasil mendaftar!");
+                this.execute("INSERT INTO mahasiswa (nim, nama, semester_terakhir, password, logic_point, math_point, memory_point) VALUES (" + MySQLUtils.quote(this.getConnection(), nim) + ", " + MySQLUtils.quote(this.getConnection(), nama) + ", 0, " + MySQLUtils.quote(this.getConnection(), this.hashing.getHashed(this.hashing.getHashed(password))) + ", 0.0, 0.0, 0.0);");
+                ReturnLoginJSON json = new ReturnLoginJSON(true, "Berhasil mendaftar!", new Mahasiswa(nim, nama, 0, password, 0.0, 0.0, 0.0));
                 return json;
             } catch(Exception ex) {
-                ReturnJSON json = new ReturnJSON(false, "Oops, ada kesalahan di dalam sistem, silahkan coba lagi.");
+                ReturnLoginJSON json = new ReturnLoginJSON(false, "Oops, ada kesalahan di dalam sistem, silahkan coba lagi.", new Mahasiswa("", "", 0, "", 0.0, 0.0, 0.0));
                 return json;
             }
         }else{
-            ReturnJSON json = new ReturnJSON(false, "Maaf, data tidak memenuhi syarat mendaftar. (Nama minimal 1 karakter, nim minimal 8 karakter, password minimal 8 karakter)");
+            ReturnLoginJSON json = new ReturnLoginJSON(false, "Maaf, data tidak memenuhi syarat mendaftar. (Nama minimal 1 karakter, nim minimal 8 karakter, password minimal 8 karakter)", new Mahasiswa(nim, nama, 0, password, 0.0, 0.0, 0.0));
             return json;
         }
     }

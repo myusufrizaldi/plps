@@ -11,9 +11,12 @@ public class Mahasiswa extends Akademika {
     
     private Security security;
     
-    public Mahasiswa(String nim, String nama, int semesterTerakhir, String password) {
+    public Mahasiswa(String nim, String nama, int semesterTerakhir, String password, double logicPoint, double mathPoint, double memoryPoint) {
         super(nim, nama, password);
         this.semesterTerakhir = semesterTerakhir;
+        this.logicPoint = logicPoint;
+        this.mathPoint = mathPoint;
+        this.memoryPoint = memoryPoint;
     }
     
     @Override

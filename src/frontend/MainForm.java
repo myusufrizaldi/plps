@@ -3,7 +3,9 @@ package frontend;
 import backend.Database;
 import backend.ReturnJSON;
 import backend.MySQLUtils;
+import backend.ReturnLoginJSON;
 import backend.Security;
+import backend.Session;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -19,8 +21,10 @@ public class MainForm extends javax.swing.JFrame {
 
     private Dimension screenSize;
     private Database db;
+    private Session session;
     private Security security;
     private ImageIcon icon;
+
     
     /**
      * Creates new form MainForm
@@ -37,6 +41,7 @@ public class MainForm extends javax.swing.JFrame {
         
         this.db = new Database();
         this.security = new Security();
+        this.session = new Session();
         
         this.jPanel1.setVisible(true);
         this.jPanel2.setVisible(false);
@@ -345,17 +350,41 @@ public class MainForm extends javax.swing.JFrame {
         else panel.setLocation((int) ((this.getWidth() / 2) - (panel.getWidth() / 2)), (int) ((this.getHeight() / 2) - (panel.getHeight() / 2)));
     }
     
+    private void daftar() {
+        ReturnLoginJSON json = this.db.daftar(this.jTextField2.getText(), this.jTextField3.getText(), this.jPasswordField2.getText());
+        JOptionPane.showMessageDialog(this, json.getMessage());
+        if(json.isSuccess()){
+            this.session = json.getSession();
+            this.jTextField2.setText("");
+            this.jTextField3.setText("");
+            this.jPasswordField2.setText("");
+        }
+    }
+    
+    private void login() {
+        ReturnLoginJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+        JOptionPane.showMessageDialog(null, json.getMessage());
+        if(json.isSuccess()){
+            this.session = json.getSession();
+            this.jTextField1.setText("");
+        }
+        this.jPasswordField1.setText("");
+        
+        if(json.isSuccess()){
+            
+            WelcomeForm welcomeForm = new WelcomeForm(this.db, this.session);
+            welcomeForm.setVisible(true);
+            this.dispose();
+            
+        }
+    }
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
      
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-        ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
-        JOptionPane.showMessageDialog(null, json.getMessage());
-        if(json.isSuccess()){
-                this.jTextField1.setText("");
-        }
-        this.jPasswordField1.setText("");
+        this.login();
     }//GEN-LAST:event_jButton1MouseReleased
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
@@ -370,23 +399,13 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
-            JOptionPane.showMessageDialog(null, json.getMessage());
-            if(json.isSuccess()){
-                this.jTextField1.setText("");
-            }
-            this.jPasswordField1.setText("");
+            this.login();
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
-            JOptionPane.showMessageDialog(null, json.getMessage());
-            if(json.isSuccess()){
-                this.jTextField1.setText("");
-            }
-            this.jPasswordField1.setText("");
+            this.login();
         }
     }//GEN-LAST:event_jPasswordField1KeyPressed
 
