@@ -1,13 +1,14 @@
 package frontend;
 
 import backend.Database;
-import backend.LoginJSON;
+import backend.ReturnJSON;
 import backend.MySQLUtils;
 import backend.Security;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,12 +20,26 @@ public class MainForm extends javax.swing.JFrame {
     private Dimension screenSize;
     private Database db;
     private Security security;
+    private ImageIcon icon;
     
     /**
      * Creates new form MainForm
      */
     public MainForm() {
         initComponents();
+        this.icon = new ImageIcon(MainForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
+        this.setIconImage(this.icon.getImage());
+        
+        Dimension _WXGA = new Dimension(1024, 768);
+        this.screenSize = new Dimension(this.getWidth(), this.getHeight());
+        this.setMinimumSize(_WXGA);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //SetFullscreen
+        
+        this.db = new Database();
+        this.security = new Security();
+        
+        this.jPanel1.setVisible(true);
+        this.jPanel2.setVisible(false);
     }
 
     /**
@@ -56,6 +71,9 @@ public class MainForm extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Rancreid Study Advisor: Informatics Engineering");
+        setFont(new java.awt.Font("Oswald", 0, 10)); // NOI18N
+        setForeground(new java.awt.Color(0, 0, 0));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -323,30 +341,25 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void centeringPanel(JPanel panel) {
-        panel.setLocation((this.getWidth() / 2) - (panel.getWidth() / 2), (this.getHeight() / 2) - (panel.getHeight() / 2));  
+        if(this.screenSize != null) panel.setLocation((int) ((this.screenSize.getWidth() / 2) - (panel.getWidth() / 2)), (int) ((this.screenSize.getHeight() / 2) - (panel.getHeight() / 2)));  
+        else panel.setLocation((int) ((this.getWidth() / 2) - (panel.getWidth() / 2)), (int) ((this.getHeight() / 2) - (panel.getHeight() / 2)));
     }
     
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Dimension _WXGA = new Dimension(1024, 768);
-        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setMinimumSize(_WXGA);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //SetFullscreen
-        
-        this.db = new Database();
-        this.security = new Security();
-        
-        this.jPanel1.setVisible(true);
-        this.jPanel2.setVisible(false);
-        JOptionPane.showMessageDialog(null, "I am happy.");
-        
+     
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-        LoginJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+        ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
         JOptionPane.showMessageDialog(null, json.getMessage());
+        if(json.isSuccess()){
+                this.jTextField1.setText("");
+        }
+        this.jPasswordField1.setText("");
     }//GEN-LAST:event_jButton1MouseReleased
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        if(this.screenSize != null) this.screenSize.setSize(this.getWidth(), this.getHeight());
         if(this.jPanel1.isVisible()) centeringPanel(jPanel1);
         if(this.jPanel2.isVisible()) centeringPanel(jPanel2);
     }//GEN-LAST:event_formComponentResized
@@ -357,15 +370,23 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            LoginJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+            ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
             JOptionPane.showMessageDialog(null, json.getMessage());
+            if(json.isSuccess()){
+                this.jTextField1.setText("");
+            }
+            this.jPasswordField1.setText("");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            LoginJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+            ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
             JOptionPane.showMessageDialog(null, json.getMessage());
+            if(json.isSuccess()){
+                this.jTextField1.setText("");
+            }
+            this.jPasswordField1.setText("");
         }
     }//GEN-LAST:event_jPasswordField1KeyPressed
 
@@ -378,16 +399,32 @@ public class MainForm extends javax.swing.JFrame {
         this.jPanel1.setVisible(false);
         //this.centeringPanel(jPanel1);
         this.centeringPanel(jPanel2);
-        this.setExtendedState(JFrame.NORMAL);
+        this.setSize(this.getWidth(), this.getHeight() - 1);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
-        //if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            ReturnJSON json = this.db.daftar(this.jTextField2.getText(), this.jTextField3.getText(), this.jPasswordField2.getText());
+            JOptionPane.showMessageDialog(this, json.getMessage());
+            if(json.isSuccess()){
+                this.jTextField2.setText("");
+                this.jTextField3.setText("");
+                this.jPasswordField2.setText("");
+            }
+        }
     }//GEN-LAST:event_jTextField2KeyPressed
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
-        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            ReturnJSON json = this.db.daftar(this.jTextField2.getText(), this.jTextField3.getText(), this.jPasswordField2.getText());
+            JOptionPane.showMessageDialog(this, json.getMessage());
+            if(json.isSuccess()){
+                this.jTextField2.setText("");
+                this.jTextField3.setText("");
+                this.jPasswordField2.setText("");
+            }
+        }
     }//GEN-LAST:event_jTextField3KeyPressed
 
     private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
@@ -395,22 +432,33 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField2ActionPerformed
 
     private void jPasswordField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField2KeyPressed
-        //if(evt.getKeyCode() == KeyEvent.VK_ENTER) this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            ReturnJSON json = this.db.daftar(this.jTextField2.getText(), this.jTextField3.getText(), this.jPasswordField2.getText());
+            JOptionPane.showMessageDialog(this, json.getMessage());
+            if(json.isSuccess()){
+                this.jTextField2.setText("");
+                this.jTextField3.setText("");
+                this.jPasswordField2.setText("");
+            }
+        }
     }//GEN-LAST:event_jPasswordField2KeyPressed
 
     private void jButton3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseReleased
-        LoginJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+        ReturnJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
         JOptionPane.showMessageDialog(null, json.getMessage());
+        if(json.isSuccess()){
+                this.jTextField1.setText("");
+        }
+        this.jPasswordField1.setText("");
     }//GEN-LAST:event_jButton3MouseReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(jTextField2.getText().length() > 1 && jTextField3.getText().length() >= 8 && jPasswordField2.getPassword().length >= 8){
-            try {
-                this.db.execute("INSERT INTO mahasiswa (nim, nama, semester_terakhir, password) VALUES (" + MySQLUtils.quote(this.db.getConnection(), this.jTextField2.getText()) + ", " + MySQLUtils.quote(this.db.getConnection(), this.jTextField3.getText()) + ", 0, " + MySQLUtils.quote(this.db.getConnection(), this.security.getHashed(this.security.getHashed(this.jPasswordField2.getText()))) + ");");
-                JOptionPane.showMessageDialog(null, "Berhasil mendaftar!");
-            } catch(Exception ex) {
-                JOptionPane.showMessageDialog(null, "Gagal mendaftar!");
-            }
+        ReturnJSON json = this.db.daftar(this.jTextField2.getText(), this.jTextField3.getText(), this.jPasswordField2.getText());
+        JOptionPane.showMessageDialog(this, json.getMessage());
+        if(json.isSuccess()){
+            this.jTextField2.setText("");
+            this.jTextField3.setText("");
+            this.jPasswordField2.setText("");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -424,7 +472,7 @@ public class MainForm extends javax.swing.JFrame {
         //this.centeringPanel(jPanel1);
         this.centeringPanel(jPanel2);
         
-        this.setExtendedState(JFrame.NORMAL);
+        this.setSize(this.getWidth(), this.getHeight() - 1);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButton4ActionPerformed
 

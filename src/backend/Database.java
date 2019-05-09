@@ -89,7 +89,7 @@ public class Database {
         }
     }
     
-    public LoginJSON login (String nomorInduk, String password) {
+    public ReturnJSON login (String nomorInduk, String password) {
         try{         
             
             password = this.hashing.getHashed(this.hashing.getHashed(password));
@@ -97,11 +97,14 @@ public class Database {
                 if(this.tabelMahasiswa.get(nomorInduk).equals(password)){
                     this.runQuery("SELECT * FROM mahasiswa WHERE nim='" + nomorInduk + "' AND password='" + password + "';");
                     if(this.result.next()){
-                        LoginJSON json = new LoginJSON(true, "Selamat datang " + this.result.getString("nama") + "!");
+                        ReturnJSON json = new ReturnJSON(true, "Selamat datang " + this.result.getString("nama") + "!");
                         return json;
-                    }
+                    }else{
+                            ReturnJSON json = new ReturnJSON(false, "Maaf, NIM atau Password salah.");
+                            return json;
+                        }
                 }else{
-                    LoginJSON json = new LoginJSON(false, "Maaf, NIM atau Password salah.");
+                    ReturnJSON json = new ReturnJSON(false, "Maaf, NIM atau Password salah.");
                     return json;
                 }       
             }else{
@@ -110,23 +113,41 @@ public class Database {
                         this.runQuery("SELECT * FROM dosen WHERE nip='" + nomorInduk + "' AND password='" + password + "';");
                         
                         if(this.result.next()){
-                            LoginJSON json = new LoginJSON(true, "Selamat datang Bapak/Ibu " + this.result.getString("nama") + "!");
+                            ReturnJSON json = new ReturnJSON(true, "Selamat datang Bapak/Ibu " + this.result.getString("nama") + "!");
+                            return json;
+                        }else{
+                            ReturnJSON json = new ReturnJSON(false, "Maaf, NIP atau Password salah.");
                             return json;
                         }
                     }else{
-                        LoginJSON json = new LoginJSON(true, "Maaf, NIP atau Password salah.");
+                        ReturnJSON json = new ReturnJSON(false, "Maaf, NIP atau Password salah.");
                         return json;
                     }
+                }else{
+                    ReturnJSON json = new ReturnJSON(false, "Maaf, Nomor Induk tidak terdaftar.");
+                    return json;
                 }
             }
             
         } catch (SQLException ex) {
-            LoginJSON json = new LoginJSON(true, "Kesalahan Terjadi: Login");
+            ReturnJSON json = new ReturnJSON(false, "Oops, kesalahan telah terjadi pada sistem: Login");
             return json;
         }
-        
-        return null;
     }
     
-    
+    public ReturnJSON daftar(String nama, String nim, String password) {
+        if(nama.length() > 1 && nim.length() >= 8 && password.length() >= 8){
+            try {
+                this.execute("INSERT INTO mahasiswa (nim, nama, semester_terakhir, password) VALUES (" + MySQLUtils.quote(this.getConnection(), nim) + ", " + MySQLUtils.quote(this.getConnection(), nama) + ", 0, " + MySQLUtils.quote(this.getConnection(), this.hashing.getHashed(this.hashing.getHashed(password))) + ");");
+                ReturnJSON json = new ReturnJSON(true, "Berhasil mendaftar!");
+                return json;
+            } catch(Exception ex) {
+                ReturnJSON json = new ReturnJSON(false, "Oops, ada kesalahan di dalam sistem, silahkan coba lagi.");
+                return json;
+            }
+        }else{
+            ReturnJSON json = new ReturnJSON(false, "Maaf, data tidak memenuhi syarat mendaftar. (Nama minimal 1 karakter, nim minimal 8 karakter, password minimal 8 karakter)");
+            return json;
+        }
+    }
 }

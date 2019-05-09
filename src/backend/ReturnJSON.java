@@ -1,13 +1,17 @@
 package backend;
 
-public class LoginJSON {
+public class ReturnJSON {
     
     private boolean isSuccess;
     private String message;
     
-    public LoginJSON (boolean isSuccess, String message) {
+    public ReturnJSON (boolean isSuccess, String message) {
         this.isSuccess = isSuccess;
         this.message = message;
+    }
+    
+    public boolean isSuccess() {
+        return this.isSuccess;
     }
     
     public String getMessage() {
