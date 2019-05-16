@@ -6,7 +6,23 @@
 package frontend;
 
 import backend.Database;
+import backend.Security;
 import backend.Session;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import stringProcessing.*;
 
 /**
  *
@@ -14,20 +30,59 @@ import backend.Session;
  */
 public class WelcomeForm extends javax.swing.JFrame {
 
+    private Dimension screenSize;
     private Database db;
     private Session session;
+    private Security security;
+    private InputMatkulMahasiswa stringProcessor;
+    
+    private BufferedImage bImage;
+    private ImageIcon icon;
+    private ImageIcon imageStep1;
+    private ImageIcon imageStep2;
+    private ImageIcon imageStep3;
+    private ImageIcon imageStep4;
     
     /**
      * Creates new form WelcomeForm
      */
     public WelcomeForm(Database db, Session session) {
         initComponents();
+        this.icon = new ImageIcon(MainForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
+        this.setIconImage(this.icon.getImage());
+        
+        this.setMinimumSize(Styling.WXGA_SCREEN);
+        this.setSize(Styling.WXGA_SCREEN);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //SetFullscreen
+        
         this.db = db;
-        this.session = session;
+        this.session = session;        
+        this.stringProcessor = new InputMatkulMahasiswa();
         
         this.jLabel2.setText("Selamat Datang, " + this.session.getMahasiswa().getNama() + "!");
+        this.panelInput.setVisible(false);
+        
     }
-
+    
+    private void showInstructions() {
+        this.getContentPane().remove(this.panelWelcome);
+        this.panelWelcome = new PanelInstruksi();
+        this.panelWelcome.setVisible(true);
+        JPanel newContentPane = new JPanel();
+        newContentPane.setSize(this.getWidth(), this.getHeight());
+        newContentPane.setMinimumSize(new Dimension(1024, 1024));
+        newContentPane.setMaximumSize(this.getMaximumSize());
+        newContentPane.add(this.panelWelcome);
+        this.getContentPane().add(newContentPane);
+        this.invalidate();
+        this.revalidate();
+        this.repaint();
+        //if(this.screenSize != null) this.screenSize.setSize(this.getWidth(), this.getHeight());
+        Styling.refreshSize(this);
+        Styling.centeringPanel(this, this.panelWelcome);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,61 +92,367 @@ public class WelcomeForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelWelcome = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(WelcomeForm.class.getResource("/res/ILLUSTRATION-SAStep2.png").getFile()));
+            Image image = bImage.getScaledInstance(240, 240, Image.SCALE_SMOOTH);
+            this.imageStep2 = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        labelStep2 = new javax.swing.JLabel(this.imageStep2);
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(WelcomeForm.class.getResource("/res/ILLUSTRATION-SAStep1.png").getFile()));
+            Image image = bImage.getScaledInstance(240, 240, Image.SCALE_SMOOTH);
+            this.imageStep1 = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        labelStep1 = new javax.swing.JLabel(this.imageStep1);
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(WelcomeForm.class.getResource("/res/ILLUSTRATION-SAStep4.png").getFile()));
+            Image image = bImage.getScaledInstance(480, 240, Image.SCALE_SMOOTH);
+            this.imageStep4 = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        labelStep4 = new javax.swing.JLabel(this.imageStep4);
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        panelInput = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textInput = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelAmbilMatkul = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Oswald", 0, 10)); // NOI18N
+        setMinimumSize(new java.awt.Dimension(1024, 1024));
+        setSize(new java.awt.Dimension(1024, 768));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        panelWelcome.setBackground(new java.awt.Color(255, 255, 255));
+        panelWelcome.setPreferredSize(new java.awt.Dimension(1024, 720));
+        panelWelcome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Oswald", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel2.setText("Selamat Datang, namaAnu!");
+        panelWelcome.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 50, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Oswald", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Silahkan ikuti instruksi di bawah untuk memasukkan nilai-nilai Anda secara otomatis.");
+        panelWelcome.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 113, -1, -1));
+        panelWelcome.add(labelStep2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 240, 240));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addContainerGap(569, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(291, Short.MAX_VALUE))
-        );
+        labelStep1.setBackground(new java.awt.Color(51, 204, 255));
+        panelWelcome.add(labelStep1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 240, 240));
+        panelWelcome.add(labelStep4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 380, 240));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel3.setText("1");
+        panelWelcome.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel4.setText("3");
+        panelWelcome.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 400, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Oswald", 0, 36)); // NOI18N
+        jLabel5.setText("4");
+        panelWelcome.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1173, 512, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setText("login.");
+        panelWelcome.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 50, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 153, 255));
+        jLabel8.setText("<html><u>Buka siakad.itera.ac.id</u></html>");
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        panelWelcome.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setText("<html>Pilih menu Kartu Hasil Studi yang<br>terletak pada menu bagian kiri.</html>");
+        panelWelcome.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 253, -1));
+
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jButton1.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("SAYA MENGERTI, LANJUTKAN >");
+        jButton1.setBorder(null);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton1MouseReleased(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panelWelcome.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 610, 313, 57));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setText("<html>Pilih semester lalu klik tampilkan. Setelah itu, blok tabel hasil studi dari nomor 1 hingga selesai, lalu salin dan tempel blok tersebut pada kotak teks input pada tahap selanjutnya.</html>");
+        panelWelcome.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 460, 380, 127));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel14.setText("2");
+        panelWelcome.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setText(", lalu");
+        panelWelcome.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, 50, -1));
+
+        panelInput.setBackground(new java.awt.Color(255, 255, 255));
+        panelInput.setPreferredSize(new java.awt.Dimension(1024, 720));
+        panelInput.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel12.setText("Input Nilai Semua Semester");
+        panelInput.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 50, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel13.setText("Silahkan salin semua tabel hasil studi dari web siakad lalu tempelkan pada kotak teks di bawah");
+        panelInput.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 107, -1, -1));
+
+        textInput.setColumns(20);
+        textInput.setRows(5);
+        textInput.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                textInputInputMethodTextChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(textInput);
+
+        panelInput.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 410, 410));
+
+        jButton2.setBackground(new java.awt.Color(204, 204, 204));
+        jButton2.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(102, 102, 102));
+        jButton2.setText("KONVERSI KE TABEL");
+        jButton2.setBorder(null);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton2MouseReleased(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        panelInput.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 610, 210, 57));
+
+        tabelAmbilMatkul.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No.", "Smt.", "Mata Kuliah", "Nilai"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabelAmbilMatkul);
+        if (tabelAmbilMatkul.getColumnModel().getColumnCount() > 0) {
+            tabelAmbilMatkul.getColumnModel().getColumn(0).setResizable(false);
+            tabelAmbilMatkul.getColumnModel().getColumn(0).setPreferredWidth(4);
+            tabelAmbilMatkul.getColumnModel().getColumn(1).setResizable(false);
+            tabelAmbilMatkul.getColumnModel().getColumn(1).setPreferredWidth(4);
+            tabelAmbilMatkul.getColumnModel().getColumn(2).setResizable(false);
+            tabelAmbilMatkul.getColumnModel().getColumn(2).setPreferredWidth(256);
+            tabelAmbilMatkul.getColumnModel().getColumn(3).setResizable(false);
+            tabelAmbilMatkul.getColumnModel().getColumn(3).setPreferredWidth(4);
+        }
+
+        panelInput.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, -1, 410));
+
+        jButton3.setBackground(new java.awt.Color(0, 153, 255));
+        jButton3.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("SELESAI");
+        jButton3.setBorder(null);
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton3MouseReleased(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        panelInput.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(753, 610, 210, 57));
+
+        jButton4.setBackground(new java.awt.Color(204, 204, 204));
+        jButton4.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(102, 102, 102));
+        jButton4.setText("< KEMBALI");
+        jButton4.setBorder(null);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton4MouseReleased(evt);
+            }
+        });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        panelInput.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 210, 57));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(panelWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1195, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        if(this.panelWelcome.isVisible()) Styling.centeringPanel(this, this.panelWelcome);
+        if(this.panelInput.isVisible()) Styling.centeringPanel(this, panelInput);
+    }//GEN-LAST:event_formComponentResized
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        Styling.centeringPanel(this, this.panelWelcome);
+        Styling.refreshSize(this);
+        
+        System.out.println(this.panelWelcome.getSize());
+    }//GEN-LAST:event_formWindowActivated
+
+    private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(this.tabelAmbilMatkul.getRowCount() != 0){
+            int jumlahRow = ((DefaultTableModel)(this.tabelAmbilMatkul.getModel())).getRowCount();
+            for(int i=0; i<jumlahRow; i++){
+                ((DefaultTableModel)(this.tabelAmbilMatkul.getModel())).removeRow(0);
+            }
+        }
+        int nomorSekarang = 1;
+        int semesterSekarang = 1;
+        InputMatkulMahasiswaJSON json;
+        
+        for(String line: textInput.getText().split("\\n")){
+            if(!line.equals("")){
+                json = this.stringProcessor.extract(line);
+                if(json.isAccepted()){
+                    ((DefaultTableModel)(this.tabelAmbilMatkul.getModel())).addRow(new Object[]{nomorSekarang, semesterSekarang, json.getIdMatkul(), json.getNilai()});
+                    nomorSekarang++;
+                }
+            }else{
+                semesterSekarang++;
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.panelInput.setVisible(true);
+        this.panelWelcome.setVisible(false);
+
+        Styling.refreshSize(this);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
+
+    }//GEN-LAST:event_jButton1MouseReleased
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://siakad.itera.ac.id/"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops, nampaknya url tidak bisa dibuka.");
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void textInputInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_textInputInputMethodTextChanged
+        
+    }//GEN-LAST:event_textInputInputMethodTextChanged
+
+    private void jButton3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MouseReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4MouseReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.panelInput.setVisible(false);
+        this.panelWelcome.setVisible(true);
+
+        Styling.refreshSize(this);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,8 +477,31 @@ public class WelcomeForm extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelStep1;
+    private javax.swing.JLabel labelStep2;
+    private javax.swing.JLabel labelStep4;
+    private javax.swing.JPanel panelInput;
+    private javax.swing.JPanel panelWelcome;
+    private javax.swing.JTable tabelAmbilMatkul;
+    private javax.swing.JTextArea textInput;
     // End of variables declaration//GEN-END:variables
 }

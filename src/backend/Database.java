@@ -1,11 +1,6 @@
 package backend;
-import backend.Security;
-import frontend.MsgBox;
 import java.sql.*;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Database {

@@ -1,10 +1,10 @@
 package stringProcessing;
 
-public class InputMatkul {
+public class InputMatkulMahasiswa {
     
     private int[][] matrix;
     
-    public InputMatkul() {
+    public InputMatkulMahasiswa() {
         this.matrix = new int[12][95];
         
         //init error
@@ -20,6 +20,8 @@ public class InputMatkul {
             matrix[1][j] = 1;
             matrix[2][j] = 3;
             matrix[3][j] = 3;
+            matrix[4][j] = 5;
+            matrix[5][j] = 5;
             matrix[6][j] = 7;
             //matrix[5][j] = 6;
         }
@@ -40,19 +42,21 @@ public class InputMatkul {
             matrix[5][j] = 5;
         }
         
-        //simbol yang mungkin masuk judul matkul
+        //simbol yang mungkin masuk nama matkul
         for(int j=1; j<16; j++){
             matrix[4][j] = 5;// &
             matrix[5][j] = 5;
         }
         
-        //spasi dan tab
+        //spasi
         matrix[1][0] = 2;
         matrix[3][0] = 4;
         matrix[4][0] = 5;
         matrix[5][0] = 5;
-        matrix[5][94] = 6;
         matrix[7][0] = 8;
+        
+        //tab
+        matrix[5][94] = 6;
         matrix[1][94] = 2;
         matrix[3][94] = 4;
         matrix[7][94] = 8;
@@ -65,7 +69,7 @@ public class InputMatkul {
         matrix[9][35] = 10;
     }
     
-    public AutomataJSON extract(String line) {
+    public InputMatkulMahasiswaJSON extract(String line) {
         int currentState = 0;
         int lastValidState = 0;
         int ascii;
@@ -91,7 +95,7 @@ public class InputMatkul {
         }
         
         boolean accepted = (currentState == 9 || currentState == 10);
-        AutomataJSON json = new AutomataJSON(accepted, nomor, idMatkul, nilai, lastValidState);
+        InputMatkulMahasiswaJSON json = new InputMatkulMahasiswaJSON(accepted, lastValidState, nomor, idMatkul, nilai);
         
         System.out.println("");
         return json;
