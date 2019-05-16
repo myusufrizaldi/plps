@@ -1,5 +1,11 @@
 package stringProcessing;
 
+import backend.Database;
+import backend.Security;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 public class InputDatabaseMatkulJSON extends JSON {
     
     private String idMatkul;
@@ -12,10 +18,25 @@ public class InputDatabaseMatkulJSON extends JSON {
     private double mathPointRate;
     private double memoryPointRate;
     
-    public InputDatabaseMatkulJSON (boolean accepted, int lastValidState, String idMatkul, String namaMatkul, boolean wajib, String sks, String semester, String prioritas, String logicPointRate, String mathPointRate, String memoryPointRate) {
+    private Database db;
+    
+    public InputDatabaseMatkulJSON (boolean accepted, int lastValidState, String idMatkul, String namaMatkul, String sks, String semester, boolean wajib, String prioritas, String logicPointRate, String mathPointRate, String memoryPointRate) {
         super(accepted, lastValidState);
-        this.idMatkul = idMatkul;
-        this.namaMatkul = namaMatkul;
+        
+        this.db = new Database();
+        try {
+            this.idMatkul = Security.mysql_real_escape_string(db.getConnection(), idMatkul);
+        } catch (Exception ex) {
+            this.idMatkul = "";
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+        try {
+            this.namaMatkul = Security.mysql_real_escape_string(db.getConnection(), namaMatkul);
+        } catch (Exception ex) {
+            this.namaMatkul = "";
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+        
         this.wajib = wajib;
         
         try{

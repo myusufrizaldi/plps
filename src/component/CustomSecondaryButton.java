@@ -2,6 +2,8 @@ package component;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
@@ -12,15 +14,16 @@ public class CustomSecondaryButton extends JPanel {
     
     public CustomSecondaryButton() {
         super();
-        this.addMouseListener(new SecondaryButtonMouseListener(this));
+        this.addMouseListener(new CustomSecondaryButtonMouseListener(this));
+        this.setBackground(Color.decode("#ecf0f1"));
     }
 
 }
 
-class SecondaryButtonMouseListener implements MouseListener {
+class CustomSecondaryButtonMouseListener implements MouseListener {
     private final JComponent component;
 
-    public SecondaryButtonMouseListener(JComponent component) {
+    public CustomSecondaryButtonMouseListener(JComponent component) {
         this.component = component;
     }
 

@@ -1,17 +1,16 @@
 package frontend;
 
 import backend.Database;
-import backend.ReturnJSON;
-import backend.MySQLUtils;
 import backend.ReturnLoginJSON;
 import backend.Security;
 import backend.Session;
 import component.*;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
-import javax.swing.BorderFactory;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,6 +25,11 @@ public class MainForm extends javax.swing.JFrame {
     private Session session;
     private Security security;
     private ImageIcon icon;
+    
+    private BufferedImage bImage;
+    private ImageIcon iconLogin;
+    private ImageIcon iconRegister;
+    private ImageIcon iconBack;
 
     
     /**
@@ -62,8 +66,18 @@ public class MainForm extends javax.swing.JFrame {
         jTextField1 = new CustomTextField();
         jLabel3 = new javax.swing.JLabel();
         jPasswordField1 = new CustomPasswordField();
-        jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        btnEditMataKuliah5 = new CustomPrimaryButton();
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Login.png").getFile()));
+            Image image = bImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            this.iconLogin = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        iconEditMataKuliah5 = new javax.swing.JLabel(this.iconLogin);
+        lblEditMataKuliah5 = new javax.swing.JLabel();
         panelDaftar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -72,8 +86,27 @@ public class MainForm extends javax.swing.JFrame {
         jTextField3 = new CustomTextField();
         jLabel7 = new javax.swing.JLabel();
         jPasswordField2 = new CustomPasswordField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEditMataKuliah6 = new CustomPrimaryButton();
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Check.png").getFile()));
+            Image image = bImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            this.iconRegister = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        iconEditMataKuliah6 = new javax.swing.JLabel(this.iconRegister);
+        lblEditMataKuliah6 = new javax.swing.JLabel();
+        btnEditMataKuliah7 = new CustomSecondaryButton();
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Back.png").getFile()));
+            Image image = bImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            this.iconBack = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        iconEditMataKuliah7 = new javax.swing.JLabel(this.iconBack);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rancreid Study Advisor: Informatics Engineering");
@@ -126,33 +159,62 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText(" LOG IN  →  ");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 153, 255));
-        jLabel8.setText("<html><u>Daftar</u></html>");
+        jLabel8.setText("Daftar");
         jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);
             }
         });
+
+        btnEditMataKuliah5.setBackground(new java.awt.Color(51, 153, 255));
+        btnEditMataKuliah5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah5MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah5MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah5MouseReleased(evt);
+            }
+        });
+
+        iconEditMataKuliah5.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        iconEditMataKuliah5.setForeground(new java.awt.Color(51, 51, 51));
+        iconEditMataKuliah5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblEditMataKuliah5.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        lblEditMataKuliah5.setForeground(new java.awt.Color(255, 255, 255));
+        lblEditMataKuliah5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblEditMataKuliah5.setText("Log In");
+
+        javax.swing.GroupLayout btnEditMataKuliah5Layout = new javax.swing.GroupLayout(btnEditMataKuliah5);
+        btnEditMataKuliah5.setLayout(btnEditMataKuliah5Layout);
+        btnEditMataKuliah5Layout.setHorizontalGroup(
+            btnEditMataKuliah5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditMataKuliah5Layout.createSequentialGroup()
+                .addComponent(iconEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(lblEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        btnEditMataKuliah5Layout.setVerticalGroup(
+            btnEditMataKuliah5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditMataKuliah5Layout.createSequentialGroup()
+                .addGroup(btnEditMataKuliah5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(iconEditMataKuliah5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblEditMataKuliah5, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout panelLoginLayout = new javax.swing.GroupLayout(panelLogin);
         panelLogin.setLayout(panelLoginLayout);
@@ -163,19 +225,20 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(panelLoginLayout.createSequentialGroup()
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelLoginLayout.createSequentialGroup()
                     .addGap(48, 48, 48)
                     .addComponent(jLabel2)
-                    .addContainerGap(297, Short.MAX_VALUE)))
+                    .addContainerGap(246, Short.MAX_VALUE)))
         );
         panelLoginLayout.setVerticalGroup(
             panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,19 +251,19 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLoginLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(13, 13, 13)))
+                .addGap(46, 46, 46))
             .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelLoginLayout.createSequentialGroup()
                     .addGap(36, 36, 36)
                     .addComponent(jLabel2)
-                    .addContainerGap(488, Short.MAX_VALUE)))
+                    .addContainerGap(476, Short.MAX_VALUE)))
         );
-
-        this.jButton1.setBorderPainted(false);
 
         panelDaftar.setBackground(new java.awt.Color(255, 255, 255));
         panelDaftar.setPreferredSize(new java.awt.Dimension(400, 560));
@@ -244,38 +307,89 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setActionCommand("DAFTAR");
-        jButton3.setBorder(null);
-        jButton3.setLabel("DAFTAR");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton3MouseReleased(evt);
+        btnEditMataKuliah6.setBackground(new java.awt.Color(51, 153, 255));
+        btnEditMataKuliah6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah6MouseClicked(evt);
             }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah6MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah6MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah6MouseReleased(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(153, 153, 153));
-        jButton4.setText("BATAL");
-        jButton4.setBorder(null);
-        jButton4.setBorderPainted(false);
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+        iconEditMataKuliah6.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        iconEditMataKuliah6.setForeground(new java.awt.Color(51, 51, 51));
+        iconEditMataKuliah6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblEditMataKuliah6.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        lblEditMataKuliah6.setForeground(new java.awt.Color(255, 255, 255));
+        lblEditMataKuliah6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblEditMataKuliah6.setText("Daftar");
+
+        javax.swing.GroupLayout btnEditMataKuliah6Layout = new javax.swing.GroupLayout(btnEditMataKuliah6);
+        btnEditMataKuliah6.setLayout(btnEditMataKuliah6Layout);
+        btnEditMataKuliah6Layout.setHorizontalGroup(
+            btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditMataKuliah6Layout.createSequentialGroup()
+                .addComponent(iconEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(lblEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        btnEditMataKuliah6Layout.setVerticalGroup(
+            btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditMataKuliah6Layout.createSequentialGroup()
+                .addGroup(btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(iconEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btnEditMataKuliah7.setBackground(new java.awt.Color(236, 240, 241));
+        btnEditMataKuliah7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton4MouseReleased(evt);
+                btnEditMataKuliah7MouseReleased(evt);
             }
         });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+
+        iconEditMataKuliah7.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        iconEditMataKuliah7.setForeground(new java.awt.Color(51, 51, 51));
+        iconEditMataKuliah7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout btnEditMataKuliah7Layout = new javax.swing.GroupLayout(btnEditMataKuliah7);
+        btnEditMataKuliah7.setLayout(btnEditMataKuliah7Layout);
+        btnEditMataKuliah7Layout.setHorizontalGroup(
+            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnEditMataKuliah7Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        btnEditMataKuliah7Layout.setVerticalGroup(
+            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnEditMataKuliah7Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout panelDaftarLayout = new javax.swing.GroupLayout(panelDaftar);
         panelDaftar.setLayout(panelDaftarLayout);
@@ -283,20 +397,20 @@ public class MainForm extends javax.swing.JFrame {
             panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDaftarLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelDaftarLayout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel5)
-                        .addComponent(jLabel4)
                         .addComponent(jLabel6)
                         .addComponent(jLabel7)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                        .addComponent(jTextField2)
-                        .addComponent(jPasswordField2)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addComponent(jTextField3)
+                        .addComponent(jPasswordField2)
+                        .addGroup(panelDaftarLayout.createSequentialGroup()
+                            .addComponent(btnEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(56, 56, 56)
+                            .addComponent(btnEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField2))
+                    .addComponent(jLabel4))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         panelDaftarLayout.setVerticalGroup(
             panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,11 +429,11 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -331,7 +445,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(panelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(panelDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,10 +519,6 @@ public class MainForm extends javax.swing.JFrame {
      
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-
-    }//GEN-LAST:event_jButton1MouseReleased
-
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         if(this.panelLogin.isVisible()) Styling.centeringPanel(this, panelLogin);
         if(this.panelDaftar.isVisible()) Styling.centeringPanel(this, panelDaftar);
@@ -452,29 +562,6 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPasswordField2KeyPressed
 
-    private void jButton3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseReleased
-
-    }//GEN-LAST:event_jButton3MouseReleased
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.daftar();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4MouseReleased
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        this.panelDaftar.setVisible(false);
-        this.panelLogin.setVisible(true);
-        
-        Styling.refreshSize(this);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.login();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseEntered
@@ -484,7 +571,72 @@ public class MainForm extends javax.swing.JFrame {
         this.panelLogin.setVisible(false);
         
         Styling.refreshSize(this);
+        this.jTextField2.grabFocus();
     }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void btnEditMataKuliah5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseClicked
+        this.login();
+    }//GEN-LAST:event_btnEditMataKuliah5MouseClicked
+
+    private void btnEditMataKuliah5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah5MouseEntered
+
+    private void btnEditMataKuliah5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah5MouseExited
+
+    private void btnEditMataKuliah5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah5MousePressed
+
+    private void btnEditMataKuliah5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah5MouseReleased
+
+    private void btnEditMataKuliah6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseClicked
+        this.daftar();
+    }//GEN-LAST:event_btnEditMataKuliah6MouseClicked
+
+    private void btnEditMataKuliah6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah6MouseEntered
+
+    private void btnEditMataKuliah6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah6MouseExited
+
+    private void btnEditMataKuliah6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah6MousePressed
+
+    private void btnEditMataKuliah6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah6MouseReleased
+
+    private void btnEditMataKuliah7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseClicked
+        this.panelDaftar.setVisible(false);
+        this.panelLogin.setVisible(true);
+        
+        Styling.refreshSize(this);
+        this.jTextField1.grabFocus();
+    }//GEN-LAST:event_btnEditMataKuliah7MouseClicked
+
+    private void btnEditMataKuliah7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MouseEntered
+
+    private void btnEditMataKuliah7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MouseExited
+
+    private void btnEditMataKuliah7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MousePressed
+
+    private void btnEditMataKuliah7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MouseReleased
 
     /**
      * @param args the command line arguments
@@ -523,9 +675,18 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JPanel btnEditMataKuliah2;
+    private javax.swing.JPanel btnEditMataKuliah3;
+    private javax.swing.JPanel btnEditMataKuliah4;
+    private javax.swing.JPanel btnEditMataKuliah5;
+    private javax.swing.JPanel btnEditMataKuliah6;
+    private javax.swing.JPanel btnEditMataKuliah7;
+    private javax.swing.JLabel iconEditMataKuliah2;
+    private javax.swing.JLabel iconEditMataKuliah3;
+    private javax.swing.JLabel iconEditMataKuliah4;
+    private javax.swing.JLabel iconEditMataKuliah5;
+    private javax.swing.JLabel iconEditMataKuliah6;
+    private javax.swing.JLabel iconEditMataKuliah7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -539,6 +700,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblEditMataKuliah2;
+    private javax.swing.JLabel lblEditMataKuliah3;
+    private javax.swing.JLabel lblEditMataKuliah4;
+    private javax.swing.JLabel lblEditMataKuliah5;
+    private javax.swing.JLabel lblEditMataKuliah6;
     private javax.swing.JPanel panelDaftar;
     private javax.swing.JPanel panelLogin;
     // End of variables declaration//GEN-END:variables

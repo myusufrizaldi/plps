@@ -90,16 +90,16 @@ public class InputDatabaseMatkul {
             ascii = (int)line.charAt(i) - 32;
             if(ascii == -23) ascii = 94;
             
-            if(currentState == 0 || currentState == 1){
+            if((currentState == 0 || currentState == 1) && line.charAt(i) != '\t'){
                 idMatkul += line.charAt(i);
-            }else if(currentState == 2 || currentState == 3){
+            }else if((currentState == 2 || currentState == 3) && line.charAt(i) != '\t'){
                 namaMatkul += line.charAt(i);
             }else if(currentState == 4){
                 sks += line.charAt(i);
-            }else if(currentState == 6 || currentState == 7){
+            }else if(currentState == 6 || currentState == 7 && line.charAt(i) != 9){
                 semester += line.charAt(i);
             }else if(currentState == 8){
-                wajib = (line.charAt(i) == '1')? true : false;
+                wajib = (line.charAt(i) == '1');
             }else if(currentState == 10 || currentState == 11){
                 prioritas += line.charAt(i);
             }else if(currentState == 12 || currentState == 13){
@@ -117,9 +117,11 @@ public class InputDatabaseMatkul {
         }
         
         boolean accepted = (currentState == 16 || currentState == 17);
-        InputDatabaseMatkulJSON json = new InputDatabaseMatkulJSON(accepted, lastValidState, idMatkul, namaMatkul, wajib, sks, semester, prioritas, logicPointRate, mathPointRate, memoryPointRate);
+        InputDatabaseMatkulJSON json = new InputDatabaseMatkulJSON(accepted, lastValidState, idMatkul, namaMatkul, sks, semester, wajib, prioritas, logicPointRate, mathPointRate, memoryPointRate);
         
-        System.out.println("");
+        System.out.println(semester);
+        
+        System.out.println(json.getLastValidState());
         return json;
     }
     
