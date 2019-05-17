@@ -36,6 +36,7 @@ public class MainForm extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     public MainForm() {
+        //hai
         initComponents();
         this.icon = new ImageIcon(MainForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
         this.setIconImage(this.icon.getImage());
