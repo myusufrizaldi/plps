@@ -82,9 +82,9 @@ public class InputMatkulMahasiswa {
             
             if((currentState == 0 || currentState == 1) && ascii >= 16 && ascii < 26){
                 nomor += line.charAt(i);
-            }else if(currentState == 2 || currentState == 3){
+            }else if((currentState == 2 || currentState == 3) && line.charAt(i) != '\t'){
                 idMatkul += line.charAt(i);
-            }else if(currentState == 8 || currentState == 9){
+            }else if((currentState == 8 || currentState == 9) && line.charAt(i) != '\t'){
                 nilai += line.charAt(i);
             }
             

@@ -100,13 +100,13 @@ public class InputDatabaseMatkul {
                 semester += line.charAt(i);
             }else if(currentState == 8){
                 wajib = (line.charAt(i) == '1');
-            }else if(currentState == 10 || currentState == 11){
+            }else if((currentState == 10 || currentState == 11) && line.charAt(i) != '\t'){
                 prioritas += line.charAt(i);
-            }else if(currentState == 12 || currentState == 13){
+            }else if((currentState == 12 || currentState == 13) && line.charAt(i) != '\t'){
                 logicPointRate += line.charAt(i);
-            }else if(currentState == 14 || currentState == 15){
+            }else if((currentState == 14 || currentState == 15) && line.charAt(i) != '\t'){
                 mathPointRate += line.charAt(i);
-            }else if(currentState == 16 || currentState == 17){
+            }else if((currentState == 16 || currentState == 17) && line.charAt(i) != '\t'){
                 memoryPointRate += line.charAt(i);
             }
             

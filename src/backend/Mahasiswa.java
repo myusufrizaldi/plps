@@ -49,4 +49,28 @@ public class Mahasiswa extends Akademika {
             
         }
     }
+    
+    public void updatePoint(double logicPoint, double mathPoint, double memoryPoint) {
+        this.logicPoint = logicPoint;
+        this.mathPoint = mathPoint;
+        this.memoryPoint = memoryPoint;
+    }
+
+    public int getSemesterTerakhir() {
+        return this.semesterTerakhir;
+    }
+
+    public double getLogicPoint() {
+        return this.logicPoint;
+    }
+
+    public double getMathPoint() {
+        return this.mathPoint;
+    }
+
+    public double getMemoryPoint() {
+        return this.memoryPoint;
+    }
+    
+    
 }

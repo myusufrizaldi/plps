@@ -86,21 +86,21 @@ public class DosenForm extends javax.swing.JFrame {
         
         this.textInputTambahMatkul.getDocument().addDocumentListener(new DocumentListener() {
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            convertToTable();
-        }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                convertToTable();
+            }
 
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            convertToTable();
-        }
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                convertToTable();
+            }
 
-        @Override
-        public void changedUpdate(DocumentEvent arg0) {
-            
-        }
-    });
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+
+            }
+        });
     }
     
     private void showInstructions() {
@@ -176,7 +176,6 @@ public class DosenForm extends javax.swing.JFrame {
     private void tableToDatabase() {
         TableModel tableModel = this.tabelTambahMatkul.getModel();
         int rowTotal = this.tabelTambahMatkul.getRowCount();
-        int columnTotal = this.tabelTambahMatkul.getColumnCount();
         
         InputDatabaseMatkulJSON json;
         int totalInsert = 0;
@@ -260,7 +259,7 @@ public class DosenForm extends javax.swing.JFrame {
         lblJumlahBidang = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        btnEditMataKuliah = new javax.swing.JPanel();
+        btnEditMataKuliah = new CustomSecondaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Edit.png").getFile()));
@@ -272,6 +271,17 @@ public class DosenForm extends javax.swing.JFrame {
         iconEditMataKuliah = new javax.swing.JLabel(this.iconEdit);
         lblEditMataKuliah = new javax.swing.JLabel();
         lblNamaDosen = new javax.swing.JLabel();
+        btnEditMataKuliah7 = new CustomSecondaryButton();
+        this.bImage = null;
+        try {
+            bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Back.png").getFile()));
+            Image image = bImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            this.iconBack = new ImageIcon(image);
+        } catch (Exception ex){
+            System.out.println(ex.toString());
+        }
+        iconEditMataKuliah7 = new javax.swing.JLabel(this.iconBack);
+        lblEditMataKuliah5 = new javax.swing.JLabel();
         panelEditMataKuliah = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -581,6 +591,52 @@ public class DosenForm extends javax.swing.JFrame {
         lblNamaDosen.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNamaDosen.setText("Selamat Datang, namaAnu!");
         panelWelcome.add(lblNamaDosen, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 70, 550, -1));
+
+        btnEditMataKuliah7.setBackground(new java.awt.Color(236, 240, 241));
+        btnEditMataKuliah7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEditMataKuliah7MouseReleased(evt);
+            }
+        });
+
+        iconEditMataKuliah7.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        iconEditMataKuliah7.setForeground(new java.awt.Color(51, 51, 51));
+        iconEditMataKuliah7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblEditMataKuliah5.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        lblEditMataKuliah5.setForeground(new java.awt.Color(51, 51, 51));
+        lblEditMataKuliah5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblEditMataKuliah5.setText("Log out");
+
+        javax.swing.GroupLayout btnEditMataKuliah7Layout = new javax.swing.GroupLayout(btnEditMataKuliah7);
+        btnEditMataKuliah7.setLayout(btnEditMataKuliah7Layout);
+        btnEditMataKuliah7Layout.setHorizontalGroup(
+            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditMataKuliah7Layout.createSequentialGroup()
+                .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        btnEditMataKuliah7Layout.setVerticalGroup(
+            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        panelWelcome.add(btnEditMataKuliah7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 600, 180, 60));
 
         panelEditMataKuliah.setBackground(new java.awt.Color(255, 255, 255));
         panelEditMataKuliah.setPreferredSize(new java.awt.Dimension(1024, 720));
@@ -1233,6 +1289,11 @@ public class DosenForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditMataKuliah2MouseReleased
 
     private void btnEditMataKuliah3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah3MouseClicked
+        try {
+            this.loadStatistics();
+        } catch (SQLException ex) {
+            
+        }
         this.panelEditMataKuliah.setVisible(false);
         this.panelWelcome.setVisible(true);
 
@@ -1337,6 +1398,28 @@ public class DosenForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditMataKuliah5MouseReleased
 
+    private void btnEditMataKuliah7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseClicked
+        MainForm mainForm = new MainForm();
+        mainForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEditMataKuliah7MouseClicked
+
+    private void btnEditMataKuliah7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MouseEntered
+
+    private void btnEditMataKuliah7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MouseExited
+
+    private void btnEditMataKuliah7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MousePressed
+
+    private void btnEditMataKuliah7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditMataKuliah7MouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1367,6 +1450,7 @@ public class DosenForm extends javax.swing.JFrame {
     private javax.swing.JPanel btnEditMataKuliah4;
     private javax.swing.JPanel btnEditMataKuliah5;
     private javax.swing.JPanel btnEditMataKuliah6;
+    private javax.swing.JPanel btnEditMataKuliah7;
     private javax.swing.JCheckBox checkBoxWajib;
     private javax.swing.JLabel iconEditMataKuliah;
     private javax.swing.JLabel iconEditMataKuliah1;
@@ -1375,6 +1459,7 @@ public class DosenForm extends javax.swing.JFrame {
     private javax.swing.JLabel iconEditMataKuliah4;
     private javax.swing.JLabel iconEditMataKuliah5;
     private javax.swing.JLabel iconEditMataKuliah6;
+    private javax.swing.JLabel iconEditMataKuliah7;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1405,6 +1490,7 @@ public class DosenForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblEditMataKuliah2;
     private javax.swing.JLabel lblEditMataKuliah3;
     private javax.swing.JLabel lblEditMataKuliah4;
+    private javax.swing.JLabel lblEditMataKuliah5;
     private javax.swing.JLabel lblEditMataKuliah6;
     private javax.swing.JLabel lblJumlahBidang;
     private javax.swing.JLabel lblJumlahDosen;
