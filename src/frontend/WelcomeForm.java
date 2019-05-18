@@ -8,7 +8,6 @@ import backend.Security;
 import backend.Session;
 import component.*;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -64,11 +63,11 @@ public class WelcomeForm extends javax.swing.JFrame {
         this.loadStatus();
         this.loadRecomendedFocus();
         
-        this.jLabel2.setText("Selamat Datang, " + this.session.getMahasiswa().getNama() + "!");
+        this.lblGreeting.setText("Selamat Datang, " + this.session.getMahasiswa().getNama() + "!");
         this.panelInput.setVisible(false);
         this.panelStatus.setVisible(false);
         
-        this.textInput.getDocument().addDocumentListener(new DocumentListener() {
+        this.textInputTambahKuliah.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void removeUpdate(DocumentEvent e) {
@@ -86,24 +85,7 @@ public class WelcomeForm extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void showInstructions() {
-        this.getContentPane().remove(this.panelWelcome);
-        this.panelWelcome = new PanelInstruksi();
-        this.panelWelcome.setVisible(true);
-        JPanel newContentPane = new JPanel();
-        newContentPane.setSize(this.getWidth(), this.getHeight());
-        newContentPane.setMinimumSize(new Dimension(1024, 1024));
-        newContentPane.setMaximumSize(this.getMaximumSize());
-        newContentPane.add(this.panelWelcome);
-        this.getContentPane().add(newContentPane);
-        this.invalidate();
-        this.revalidate();
-        this.repaint();
-        //if(this.screenSize != null) this.screenSize.setSize(this.getWidth(), this.getHeight());
-        Styling.refreshSize(this);
-        Styling.centeringPanel(this, this.panelWelcome);
-    }
+
     
     private void convertToTable() {
         if(this.tabelAmbilMatkul.getRowCount() != 0){
@@ -115,13 +97,13 @@ public class WelcomeForm extends javax.swing.JFrame {
         int semesterSekarang = 1;
         InputMatkulMahasiswaJSON json;
         
-        for(String line: textInput.getText().split("\\n")){
+        for(String line: textInputTambahKuliah.getText().split("\\n")){
             if(!line.equals("")){
                 json = this.stringProcessor.extract(line);
                 if(json.isAccepted()){
                     try{
                         if(this.mataKuliah.containsKey(json.getIdMatkul())){
-                            ((DefaultTableModel)(this.tabelAmbilMatkul.getModel())).addRow(new Object[]{semesterSekarang, json.getIdMatkul(), this.mataKuliah.get(json.getIdMatkul()).getNamaMatkul(), this.mataKuliah.get(json.getIdMatkul()).getSks(), json.getNilai()});
+                            ((DefaultTableModel)(this.tabelAmbilMatkul.getModel())).addRow(new Object[]{semesterSekarang, json.getIdMatkul(), this.mataKuliah.get(json.getIdMatkul()).getNamaMatkul(), json.getNilai()});
                         }else{
                             JOptionPane.showMessageDialog(null, "Oops, mata kuliah " + json.getIdMatkul() + " belum tersedia.");
                         }
@@ -152,8 +134,7 @@ public class WelcomeForm extends javax.swing.JFrame {
             semester = Integer.parseInt(tableModel.getValueAt(i, 0).toString());
             idMatkul = tableModel.getValueAt(i, 1).toString();
             namaMatkul = tableModel.getValueAt(i, 2).toString();
-            sks = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
-            nilai = tableModel.getValueAt(i, 4).toString();
+            nilai = tableModel.getValueAt(i, 3).toString();
             
             nilaiAsli = AmbilMataKuliah.convertNilai(nilai);
             logicPoint = (nilaiAsli * 10 / 16) * this.mataKuliah.get(idMatkul).getLogicPointRate();
@@ -163,11 +144,12 @@ public class WelcomeForm extends javax.swing.JFrame {
             
             try{
                 if(this.db.execute("INSERT INTO mahasiswa_ambil_matkul (nim, id_matkul, semester, nilai, logic_point, math_point, memory_point) VALUES ('" + this.session.getMahasiswa().getNomorInduk() + "', " + Security.quote(this.db.getConnection(), idMatkul) + ", " + Security.mysql_real_escape_string(this.db.getConnection(), Integer.toString(semester)) + ", " + Security.quote(this.db.getConnection(), nilai) + ", " + logicPoint + ", " + mathPoint + ", " + memoryPoint + ");")){
-                    totalLogicPoint += logicPoint;
-                    totalMathPoint += mathPoint;
-                    totalMemoryPoint += memoryPoint;
-                    totalInsert++;
+                    
                 }
+                totalLogicPoint += logicPoint;
+                totalMathPoint += mathPoint;
+                totalMemoryPoint += memoryPoint;
+                totalInsert++;
                 
             } catch(Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
@@ -302,7 +284,7 @@ public class WelcomeForm extends javax.swing.JFrame {
     private void initComponents() {
 
         panelWelcome = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblGreeting = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         this.bImage = null;
         try {
@@ -335,12 +317,12 @@ public class WelcomeForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        linkToSiakad = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        btnEditMataKuliah = new CustomPrimaryButton();
+        btnNextToTambahMataKuliah = new CustomPrimaryButton();
         lblEditMataKuliah = new javax.swing.JLabel();
         this.bImage = null;
         try {
@@ -351,7 +333,7 @@ public class WelcomeForm extends javax.swing.JFrame {
             System.out.println(ex.toString());
         }
         iconEditMataKuliah = new javax.swing.JLabel(this.iconForward);
-        btnEditMataKuliah4 = new CustomSecondaryButton();
+        btnLogOut = new CustomSecondaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Back.png").getFile()));
@@ -366,12 +348,12 @@ public class WelcomeForm extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textInput = new javax.swing.JTextArea();
+        textInputTambahKuliah = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelAmbilMatkul = new javax.swing.JTable();
-        btnEditMataKuliah3 = new CustomSecondaryButton();
+        btnNextToStatus = new CustomSecondaryButton();
         lblEditMataKuliah3 = new javax.swing.JLabel();
-        btnEditMataKuliah1 = new CustomPrimaryButton();
+        btnSimpanMataKuliah = new CustomPrimaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Save.png").getFile()));
@@ -382,7 +364,7 @@ public class WelcomeForm extends javax.swing.JFrame {
         }
         iconEditMataKuliah1 = new javax.swing.JLabel(this.iconSave);
         lblEditMataKuliah1 = new javax.swing.JLabel();
-        btnEditMataKuliah7 = new CustomSecondaryButton();
+        btnBackToInstructions = new CustomSecondaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Back.png").getFile()));
@@ -414,7 +396,7 @@ public class WelcomeForm extends javax.swing.JFrame {
         pbLogic = new javax.swing.JProgressBar();
         pbMath = new javax.swing.JProgressBar();
         jLabel22 = new javax.swing.JLabel();
-        btnEditMataKuliah6 = new CustomSecondaryButton();
+        btnBackToTambahMataKuliah = new CustomSecondaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Back.png").getFile()));
@@ -463,9 +445,9 @@ public class WelcomeForm extends javax.swing.JFrame {
         panelWelcome.setPreferredSize(new java.awt.Dimension(1024, 720));
         panelWelcome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel2.setText("Selamat Datang, namaAnu!");
-        panelWelcome.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 50, -1, -1));
+        lblGreeting.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        lblGreeting.setText("Selamat Datang, namaAnu!");
+        panelWelcome.add(lblGreeting, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 50, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Silahkan ikuti instruksi di bawah untuk memasukkan nilai-nilai Anda secara otomatis.");
@@ -492,16 +474,16 @@ public class WelcomeForm extends javax.swing.JFrame {
         jLabel7.setText("login.");
         panelWelcome.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 50, -1));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 153, 255));
-        jLabel8.setText("<html><u>Buka siakad.itera.ac.id</u></html>");
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        linkToSiakad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        linkToSiakad.setForeground(new java.awt.Color(51, 153, 255));
+        linkToSiakad.setText("<html><u>Buka siakad.itera.ac.id</u></html>");
+        linkToSiakad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        linkToSiakad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                linkToSiakadMouseClicked(evt);
             }
         });
-        panelWelcome.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
+        panelWelcome.add(linkToSiakad, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("<html>Pilih menu Kartu Hasil Studi yang<br>terletak pada menu bagian kiri.</html>");
@@ -519,22 +501,10 @@ public class WelcomeForm extends javax.swing.JFrame {
         jLabel11.setText(", lalu");
         panelWelcome.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, 50, -1));
 
-        btnEditMataKuliah.setBackground(new java.awt.Color(51, 153, 255));
-        btnEditMataKuliah.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNextToTambahMataKuliah.setBackground(new java.awt.Color(51, 153, 255));
+        btnNextToTambahMataKuliah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliahMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliahMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliahMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliahMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliahMouseReleased(evt);
+                btnNextToTambahMataKuliahMouseClicked(evt);
             }
         });
 
@@ -547,40 +517,28 @@ public class WelcomeForm extends javax.swing.JFrame {
         iconEditMataKuliah.setForeground(new java.awt.Color(51, 51, 51));
         iconEditMataKuliah.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        javax.swing.GroupLayout btnEditMataKuliahLayout = new javax.swing.GroupLayout(btnEditMataKuliah);
-        btnEditMataKuliah.setLayout(btnEditMataKuliahLayout);
-        btnEditMataKuliahLayout.setHorizontalGroup(
-            btnEditMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliahLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnNextToTambahMataKuliahLayout = new javax.swing.GroupLayout(btnNextToTambahMataKuliah);
+        btnNextToTambahMataKuliah.setLayout(btnNextToTambahMataKuliahLayout);
+        btnNextToTambahMataKuliahLayout.setHorizontalGroup(
+            btnNextToTambahMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnNextToTambahMataKuliahLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(lblEditMataKuliah, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(iconEditMataKuliah, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        btnEditMataKuliahLayout.setVerticalGroup(
-            btnEditMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+        btnNextToTambahMataKuliahLayout.setVerticalGroup(
+            btnNextToTambahMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(lblEditMataKuliah, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(iconEditMataKuliah, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        panelWelcome.add(btnEditMataKuliah, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 610, 360, 60));
+        panelWelcome.add(btnNextToTambahMataKuliah, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 610, 360, 60));
 
-        btnEditMataKuliah4.setBackground(new java.awt.Color(236, 240, 241));
-        btnEditMataKuliah4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnLogOut.setBackground(new java.awt.Color(236, 240, 241));
+        btnLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah4MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah4MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah4MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah4MouseReleased(evt);
+                btnLogOutMouseClicked(evt);
             }
         });
 
@@ -593,26 +551,26 @@ public class WelcomeForm extends javax.swing.JFrame {
         lblEditMataKuliah4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEditMataKuliah4.setText("Log out");
 
-        javax.swing.GroupLayout btnEditMataKuliah4Layout = new javax.swing.GroupLayout(btnEditMataKuliah4);
-        btnEditMataKuliah4.setLayout(btnEditMataKuliah4Layout);
-        btnEditMataKuliah4Layout.setHorizontalGroup(
-            btnEditMataKuliah4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah4Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnLogOutLayout = new javax.swing.GroupLayout(btnLogOut);
+        btnLogOut.setLayout(btnLogOutLayout);
+        btnLogOutLayout.setHorizontalGroup(
+            btnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnLogOutLayout.createSequentialGroup()
                 .addComponent(iconEditMataKuliah4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblEditMataKuliah4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
-        btnEditMataKuliah4Layout.setVerticalGroup(
-            btnEditMataKuliah4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah4Layout.createSequentialGroup()
-                .addGroup(btnEditMataKuliah4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        btnLogOutLayout.setVerticalGroup(
+            btnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnLogOutLayout.createSequentialGroup()
+                .addGroup(btnLogOutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(iconEditMataKuliah4, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(lblEditMataKuliah4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelWelcome.add(btnEditMataKuliah4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 180, 60));
+        panelWelcome.add(btnLogOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 180, 60));
 
         panelInput.setBackground(new java.awt.Color(255, 255, 255));
         panelInput.setPreferredSize(new java.awt.Dimension(1024, 720));
@@ -626,16 +584,16 @@ public class WelcomeForm extends javax.swing.JFrame {
         jLabel13.setText("Silahkan salin semua tabel hasil studi (yang ada nilai) dari web siakad lalu tempelkan pada kotak teks di bawah");
         panelInput.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 107, -1, -1));
 
-        textInput.setColumns(20);
-        textInput.setRows(5);
-        textInput.addInputMethodListener(new java.awt.event.InputMethodListener() {
+        textInputTambahKuliah.setColumns(20);
+        textInputTambahKuliah.setRows(5);
+        textInputTambahKuliah.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                textInputInputMethodTextChanged(evt);
+                textInputTambahKuliahInputMethodTextChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(textInput);
+        jScrollPane1.setViewportView(textInputTambahKuliah);
 
         panelInput.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 410, 410));
 
@@ -644,14 +602,14 @@ public class WelcomeForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Smt.", "Kode", "Mata Kuliah", "SKS", "Nilai"
+                "Smt.", "Kode", "Mata Kuliah", "Nilai"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -662,47 +620,24 @@ public class WelcomeForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelAmbilMatkul.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelAmbilMatkulMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tabelAmbilMatkul);
         if (tabelAmbilMatkul.getColumnModel().getColumnCount() > 0) {
             tabelAmbilMatkul.getColumnModel().getColumn(0).setResizable(false);
-            tabelAmbilMatkul.getColumnModel().getColumn(0).setPreferredWidth(320);
+            tabelAmbilMatkul.getColumnModel().getColumn(0).setPreferredWidth(1);
             tabelAmbilMatkul.getColumnModel().getColumn(1).setResizable(false);
             tabelAmbilMatkul.getColumnModel().getColumn(1).setPreferredWidth(1);
-            tabelAmbilMatkul.getColumnModel().getColumn(1).setHeaderValue("Logic");
             tabelAmbilMatkul.getColumnModel().getColumn(2).setResizable(false);
-            tabelAmbilMatkul.getColumnModel().getColumn(2).setPreferredWidth(1);
-            tabelAmbilMatkul.getColumnModel().getColumn(2).setHeaderValue("Math");
+            tabelAmbilMatkul.getColumnModel().getColumn(2).setPreferredWidth(256);
             tabelAmbilMatkul.getColumnModel().getColumn(3).setResizable(false);
-            tabelAmbilMatkul.getColumnModel().getColumn(3).setPreferredWidth(1);
-            tabelAmbilMatkul.getColumnModel().getColumn(3).setHeaderValue("Memory");
-            tabelAmbilMatkul.getColumnModel().getColumn(4).setResizable(false);
-            tabelAmbilMatkul.getColumnModel().getColumn(4).setPreferredWidth(4);
-            tabelAmbilMatkul.getColumnModel().getColumn(4).setHeaderValue("Nilai");
+            tabelAmbilMatkul.getColumnModel().getColumn(3).setPreferredWidth(4);
         }
 
         panelInput.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, 410));
 
-        btnEditMataKuliah3.setBackground(new java.awt.Color(236, 240, 241));
-        btnEditMataKuliah3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNextToStatus.setBackground(new java.awt.Color(236, 240, 241));
+        btnNextToStatus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah3MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah3MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah3MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah3MouseReleased(evt);
+                btnNextToStatusMouseClicked(evt);
             }
         });
 
@@ -711,38 +646,26 @@ public class WelcomeForm extends javax.swing.JFrame {
         lblEditMataKuliah3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEditMataKuliah3.setText("Lewati");
 
-        javax.swing.GroupLayout btnEditMataKuliah3Layout = new javax.swing.GroupLayout(btnEditMataKuliah3);
-        btnEditMataKuliah3.setLayout(btnEditMataKuliah3Layout);
-        btnEditMataKuliah3Layout.setHorizontalGroup(
-            btnEditMataKuliah3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnNextToStatusLayout = new javax.swing.GroupLayout(btnNextToStatus);
+        btnNextToStatus.setLayout(btnNextToStatusLayout);
+        btnNextToStatusLayout.setHorizontalGroup(
+            btnNextToStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblEditMataKuliah3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
-        btnEditMataKuliah3Layout.setVerticalGroup(
-            btnEditMataKuliah3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah3Layout.createSequentialGroup()
+        btnNextToStatusLayout.setVerticalGroup(
+            btnNextToStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnNextToStatusLayout.createSequentialGroup()
                 .addComponent(lblEditMataKuliah3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelInput.add(btnEditMataKuliah3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 610, 130, 60));
+        panelInput.add(btnNextToStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 610, 130, 60));
 
-        btnEditMataKuliah1.setBackground(new java.awt.Color(51, 153, 255));
-        btnEditMataKuliah1.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditMataKuliah1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSimpanMataKuliah.setBackground(new java.awt.Color(51, 153, 255));
+        btnSimpanMataKuliah.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimpanMataKuliah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah1MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah1MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah1MouseReleased(evt);
+                btnSimpanMataKuliahMouseClicked(evt);
             }
         });
 
@@ -755,43 +678,31 @@ public class WelcomeForm extends javax.swing.JFrame {
         lblEditMataKuliah1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEditMataKuliah1.setText("Simpan dan Lanjutkan");
 
-        javax.swing.GroupLayout btnEditMataKuliah1Layout = new javax.swing.GroupLayout(btnEditMataKuliah1);
-        btnEditMataKuliah1.setLayout(btnEditMataKuliah1Layout);
-        btnEditMataKuliah1Layout.setHorizontalGroup(
-            btnEditMataKuliah1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah1Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnSimpanMataKuliahLayout = new javax.swing.GroupLayout(btnSimpanMataKuliah);
+        btnSimpanMataKuliah.setLayout(btnSimpanMataKuliahLayout);
+        btnSimpanMataKuliahLayout.setHorizontalGroup(
+            btnSimpanMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnSimpanMataKuliahLayout.createSequentialGroup()
                 .addComponent(iconEditMataKuliah1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblEditMataKuliah1)
                 .addGap(0, 31, Short.MAX_VALUE))
         );
-        btnEditMataKuliah1Layout.setVerticalGroup(
-            btnEditMataKuliah1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah1Layout.createSequentialGroup()
-                .addGroup(btnEditMataKuliah1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        btnSimpanMataKuliahLayout.setVerticalGroup(
+            btnSimpanMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnSimpanMataKuliahLayout.createSequentialGroup()
+                .addGroup(btnSimpanMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(iconEditMataKuliah1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(lblEditMataKuliah1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelInput.add(btnEditMataKuliah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 610, 340, 60));
+        panelInput.add(btnSimpanMataKuliah, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 610, 340, 60));
 
-        btnEditMataKuliah7.setBackground(new java.awt.Color(236, 240, 241));
-        btnEditMataKuliah7.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBackToInstructions.setBackground(new java.awt.Color(236, 240, 241));
+        btnBackToInstructions.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseReleased(evt);
+                btnBackToInstructionsMouseClicked(evt);
             }
         });
 
@@ -804,26 +715,26 @@ public class WelcomeForm extends javax.swing.JFrame {
         lblEditMataKuliah7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEditMataKuliah7.setText("Kembali");
 
-        javax.swing.GroupLayout btnEditMataKuliah7Layout = new javax.swing.GroupLayout(btnEditMataKuliah7);
-        btnEditMataKuliah7.setLayout(btnEditMataKuliah7Layout);
-        btnEditMataKuliah7Layout.setHorizontalGroup(
-            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah7Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnBackToInstructionsLayout = new javax.swing.GroupLayout(btnBackToInstructions);
+        btnBackToInstructions.setLayout(btnBackToInstructionsLayout);
+        btnBackToInstructionsLayout.setHorizontalGroup(
+            btnBackToInstructionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnBackToInstructionsLayout.createSequentialGroup()
                 .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblEditMataKuliah7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
-        btnEditMataKuliah7Layout.setVerticalGroup(
-            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah7Layout.createSequentialGroup()
-                .addGroup(btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        btnBackToInstructionsLayout.setVerticalGroup(
+            btnBackToInstructionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnBackToInstructionsLayout.createSequentialGroup()
+                .addGroup(btnBackToInstructionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(lblEditMataKuliah7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelInput.add(btnEditMataKuliah7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 180, 60));
+        panelInput.add(btnBackToInstructions, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 180, 60));
 
         panelStatus.setBackground(new java.awt.Color(255, 255, 255));
         panelStatus.setPreferredSize(new java.awt.Dimension(1024, 720));
@@ -869,22 +780,10 @@ public class WelcomeForm extends javax.swing.JFrame {
         jLabel22.setText("Silahkan lihat status dan potensi yang Anda miliki");
         panelStatus.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 107, -1, -1));
 
-        btnEditMataKuliah6.setBackground(new java.awt.Color(236, 240, 241));
-        btnEditMataKuliah6.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBackToTambahMataKuliah.setBackground(new java.awt.Color(236, 240, 241));
+        btnBackToTambahMataKuliah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseReleased(evt);
+                btnBackToTambahMataKuliahMouseClicked(evt);
             }
         });
 
@@ -897,26 +796,26 @@ public class WelcomeForm extends javax.swing.JFrame {
         lblEditMataKuliah6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEditMataKuliah6.setText("Kembali");
 
-        javax.swing.GroupLayout btnEditMataKuliah6Layout = new javax.swing.GroupLayout(btnEditMataKuliah6);
-        btnEditMataKuliah6.setLayout(btnEditMataKuliah6Layout);
-        btnEditMataKuliah6Layout.setHorizontalGroup(
-            btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah6Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnBackToTambahMataKuliahLayout = new javax.swing.GroupLayout(btnBackToTambahMataKuliah);
+        btnBackToTambahMataKuliah.setLayout(btnBackToTambahMataKuliahLayout);
+        btnBackToTambahMataKuliahLayout.setHorizontalGroup(
+            btnBackToTambahMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnBackToTambahMataKuliahLayout.createSequentialGroup()
                 .addComponent(iconEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
-        btnEditMataKuliah6Layout.setVerticalGroup(
-            btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah6Layout.createSequentialGroup()
-                .addGroup(btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        btnBackToTambahMataKuliahLayout.setVerticalGroup(
+            btnBackToTambahMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnBackToTambahMataKuliahLayout.createSequentialGroup()
+                .addGroup(btnBackToTambahMataKuliahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(iconEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(lblEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelStatus.add(btnEditMataKuliah6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 180, 60));
+        panelStatus.add(btnBackToTambahMataKuliah, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 610, 180, 60));
 
         lblLogicPoint.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblLogicPoint.setForeground(new java.awt.Color(102, 102, 102));
@@ -1061,159 +960,57 @@ public class WelcomeForm extends javax.swing.JFrame {
         System.out.println(this.panelWelcome.getSize());
     }//GEN-LAST:event_formWindowActivated
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void linkToSiakadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linkToSiakadMouseClicked
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://siakad.itera.ac.id/"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Oops, nampaknya url tidak bisa dibuka.");
         }
-    }//GEN-LAST:event_jLabel8MouseClicked
+    }//GEN-LAST:event_linkToSiakadMouseClicked
 
-    private void textInputInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_textInputInputMethodTextChanged
+    private void textInputTambahKuliahInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_textInputTambahKuliahInputMethodTextChanged
         
-    }//GEN-LAST:event_textInputInputMethodTextChanged
+    }//GEN-LAST:event_textInputTambahKuliahInputMethodTextChanged
 
-    private void btnEditMataKuliahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliahMouseClicked
+    private void btnNextToTambahMataKuliahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextToTambahMataKuliahMouseClicked
         this.panelInput.setVisible(true);
         this.panelWelcome.setVisible(false);
 
         Styling.refreshSize(this);
-    }//GEN-LAST:event_btnEditMataKuliahMouseClicked
+    }//GEN-LAST:event_btnNextToTambahMataKuliahMouseClicked
 
-    private void btnEditMataKuliahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliahMouseEntered
-        
-    }//GEN-LAST:event_btnEditMataKuliahMouseEntered
-
-    private void btnEditMataKuliahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliahMouseExited
-        
-    }//GEN-LAST:event_btnEditMataKuliahMouseExited
-
-    private void btnEditMataKuliahMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliahMousePressed
-        
-    }//GEN-LAST:event_btnEditMataKuliahMousePressed
-
-    private void btnEditMataKuliahMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliahMouseReleased
-        
-    }//GEN-LAST:event_btnEditMataKuliahMouseReleased
-
-    private void btnEditMataKuliah3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah3MouseClicked
+    private void btnNextToStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextToStatusMouseClicked
         this.loadStatus();
         this.loadRecomendedFocus();
         this.panelInput.setVisible(false);
         this.panelStatus.setVisible(true);
 
         Styling.refreshSize(this);
-    }//GEN-LAST:event_btnEditMataKuliah3MouseClicked
+    }//GEN-LAST:event_btnNextToStatusMouseClicked
 
-    private void btnEditMataKuliah3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah3MouseEntered
-
-    private void btnEditMataKuliah3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah3MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah3MouseExited
-
-    private void btnEditMataKuliah3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah3MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah3MousePressed
-
-    private void btnEditMataKuliah3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah3MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah3MouseReleased
-
-    private void btnEditMataKuliah1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah1MouseClicked
+    private void btnSimpanMataKuliahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMataKuliahMouseClicked
         this.tableToDatabase();
-    }//GEN-LAST:event_btnEditMataKuliah1MouseClicked
+    }//GEN-LAST:event_btnSimpanMataKuliahMouseClicked
 
-    private void btnEditMataKuliah1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah1MouseEntered
-
-    private void btnEditMataKuliah1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah1MouseExited
-
-    private void btnEditMataKuliah1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah1MousePressed
-
-    private void btnEditMataKuliah1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah1MouseReleased
-
-    private void btnEditMataKuliah4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah4MouseClicked
+    private void btnLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogOutMouseClicked
         MainForm mainForm = new MainForm();
         mainForm.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnEditMataKuliah4MouseClicked
+    }//GEN-LAST:event_btnLogOutMouseClicked
 
-    private void btnEditMataKuliah4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah4MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah4MouseEntered
-
-    private void btnEditMataKuliah4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah4MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah4MouseExited
-
-    private void btnEditMataKuliah4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah4MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah4MousePressed
-
-    private void btnEditMataKuliah4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah4MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah4MouseReleased
-
-    private void btnEditMataKuliah6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseClicked
+    private void btnBackToTambahMataKuliahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackToTambahMataKuliahMouseClicked
         this.panelInput.setVisible(true);
         this.panelStatus.setVisible(false);
 
         Styling.refreshSize(this);
-    }//GEN-LAST:event_btnEditMataKuliah6MouseClicked
+    }//GEN-LAST:event_btnBackToTambahMataKuliahMouseClicked
 
-    private void btnEditMataKuliah6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MouseEntered
-
-    private void btnEditMataKuliah6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MouseExited
-
-    private void btnEditMataKuliah6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MousePressed
-
-    private void btnEditMataKuliah6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MouseReleased
-
-    private void btnEditMataKuliah7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseClicked
+    private void btnBackToInstructionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackToInstructionsMouseClicked
         this.panelInput.setVisible(false);
         this.panelWelcome.setVisible(true);
 
         Styling.refreshSize(this);
-    }//GEN-LAST:event_btnEditMataKuliah7MouseClicked
-
-    private void btnEditMataKuliah7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MouseEntered
-
-    private void btnEditMataKuliah7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MouseExited
-
-    private void btnEditMataKuliah7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MousePressed
-
-    private void btnEditMataKuliah7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MouseReleased
-
-    private void tabelAmbilMatkulMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelAmbilMatkulMouseClicked
-        
-        
-        
-    }//GEN-LAST:event_tabelAmbilMatkulMouseClicked
+    }//GEN-LAST:event_btnBackToInstructionsMouseClicked
 
     private void tabelRekomendasiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelRekomendasiMouseClicked
         String selectedNama = ((DefaultTableModel)(this.tabelRekomendasi.getModel())).getValueAt(this.tabelRekomendasi.getSelectedRow(), 1).toString();
@@ -1288,12 +1085,12 @@ public class WelcomeForm extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel btnEditMataKuliah;
-    private javax.swing.JPanel btnEditMataKuliah1;
-    private javax.swing.JPanel btnEditMataKuliah3;
-    private javax.swing.JPanel btnEditMataKuliah4;
-    private javax.swing.JPanel btnEditMataKuliah6;
-    private javax.swing.JPanel btnEditMataKuliah7;
+    private javax.swing.JPanel btnBackToInstructions;
+    private javax.swing.JPanel btnBackToTambahMataKuliah;
+    private javax.swing.JPanel btnLogOut;
+    private javax.swing.JPanel btnNextToStatus;
+    private javax.swing.JPanel btnNextToTambahMataKuliah;
+    private javax.swing.JPanel btnSimpanMataKuliah;
     private javax.swing.JLabel iconEditMataKuliah;
     private javax.swing.JLabel iconEditMataKuliah1;
     private javax.swing.JLabel iconEditMataKuliah4;
@@ -1308,7 +1105,6 @@ public class WelcomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
@@ -1317,7 +1113,6 @@ public class WelcomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1333,6 +1128,7 @@ public class WelcomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblEditMataKuliah4;
     private javax.swing.JLabel lblEditMataKuliah6;
     private javax.swing.JLabel lblEditMataKuliah7;
+    private javax.swing.JLabel lblGreeting;
     private javax.swing.JLabel lblIconUser;
     private javax.swing.JLabel lblLogicPoint;
     private javax.swing.JLabel lblMathPoint;
@@ -1345,6 +1141,7 @@ public class WelcomeForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblSelisihLogic;
     private javax.swing.JLabel lblSelisihMath;
     private javax.swing.JLabel lblSelisihMemory;
+    private javax.swing.JLabel linkToSiakad;
     private javax.swing.JPanel panelInput;
     private javax.swing.JPanel panelStatus;
     private javax.swing.JPanel panelWelcome;
@@ -1356,6 +1153,6 @@ public class WelcomeForm extends javax.swing.JFrame {
     private javax.swing.JProgressBar pbSelectedMemory;
     private javax.swing.JTable tabelAmbilMatkul;
     private javax.swing.JTable tabelRekomendasi;
-    private javax.swing.JTextArea textInput;
+    private javax.swing.JTextArea textInputTambahKuliah;
     // End of variables declaration//GEN-END:variables
 }

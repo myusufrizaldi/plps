@@ -1,15 +1,10 @@
 package backend;
 
-import java.util.HashSet;
-
-public class Mahasiswa extends Akademika {
+public class Mahasiswa extends Akademika implements Account {
     private int semesterTerakhir;
     private double logicPoint;
     private double mathPoint;
     private double memoryPoint;
-    private HashSet<AmbilMataKuliah> ambilMataKuliah;
-    
-    private Security security;
     
     public Mahasiswa(String nim, String nama, int semesterTerakhir, String password, double logicPoint, double mathPoint, double memoryPoint) {
         super(nim, nama, password);

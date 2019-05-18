@@ -64,11 +64,11 @@ public class MainForm extends javax.swing.JFrame {
         panelLogin = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new CustomTextField();
+        textNomorIndukLogin = new CustomTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new CustomPasswordField();
-        jLabel8 = new javax.swing.JLabel();
-        btnEditMataKuliah5 = new CustomPrimaryButton();
+        textPasswordLogin = new CustomPasswordField();
+        lblDaftar = new javax.swing.JLabel();
+        btnLogIn = new CustomPrimaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Login.png").getFile()));
@@ -82,12 +82,12 @@ public class MainForm extends javax.swing.JFrame {
         panelDaftar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new CustomTextField();
+        textNamaLengkapDaftar = new CustomTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new CustomTextField();
+        textNomorIndukDaftar = new CustomTextField();
         jLabel7 = new javax.swing.JLabel();
-        jPasswordField2 = new CustomPasswordField();
-        btnEditMataKuliah6 = new CustomPrimaryButton();
+        textPasswordDaftar = new CustomPasswordField();
+        btnDaftar = new CustomPrimaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Check.png").getFile()));
@@ -98,7 +98,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         iconEditMataKuliah6 = new javax.swing.JLabel(this.iconRegister);
         lblEditMataKuliah6 = new javax.swing.JLabel();
-        btnEditMataKuliah7 = new CustomSecondaryButton();
+        btnBackToLogIn = new CustomSecondaryButton();
         this.bImage = null;
         try {
             bImage = ImageIO.read(new File(DosenForm.class.getResource("/res/ICON-Back.png").getFile()));
@@ -118,74 +118,47 @@ public class MainForm extends javax.swing.JFrame {
                 formComponentResized(evt);
             }
         });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         panelLogin.setBackground(new java.awt.Color(255, 255, 255));
         panelLogin.setPreferredSize(new java.awt.Dimension(400, 560));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("NIM/NIP");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1MouseEntered(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel2.setText("LOGIN");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        textNomorIndukLogin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        textNomorIndukLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField1KeyPressed(evt);
+                textNomorIndukLoginKeyPressed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setText("Password");
 
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
-        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        textPasswordLogin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        textPasswordLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jPasswordField1KeyPressed(evt);
+                textPasswordLoginKeyPressed(evt);
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(51, 153, 255));
-        jLabel8.setText("Daftar");
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblDaftar.setForeground(new java.awt.Color(51, 153, 255));
+        lblDaftar.setText("Daftar");
+        lblDaftar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblDaftar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                lblDaftarMouseClicked(evt);
             }
         });
 
-        btnEditMataKuliah5.setBackground(new java.awt.Color(51, 153, 255));
-        btnEditMataKuliah5.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnLogIn.setBackground(new java.awt.Color(51, 153, 255));
+        btnLogIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah5MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah5MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah5MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah5MouseReleased(evt);
+                btnLogInMouseClicked(evt);
             }
         });
 
@@ -198,20 +171,20 @@ public class MainForm extends javax.swing.JFrame {
         lblEditMataKuliah5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEditMataKuliah5.setText("Log In");
 
-        javax.swing.GroupLayout btnEditMataKuliah5Layout = new javax.swing.GroupLayout(btnEditMataKuliah5);
-        btnEditMataKuliah5.setLayout(btnEditMataKuliah5Layout);
-        btnEditMataKuliah5Layout.setHorizontalGroup(
-            btnEditMataKuliah5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah5Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnLogInLayout = new javax.swing.GroupLayout(btnLogIn);
+        btnLogIn.setLayout(btnLogInLayout);
+        btnLogInLayout.setHorizontalGroup(
+            btnLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnLogInLayout.createSequentialGroup()
                 .addComponent(iconEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        btnEditMataKuliah5Layout.setVerticalGroup(
-            btnEditMataKuliah5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah5Layout.createSequentialGroup()
-                .addGroup(btnEditMataKuliah5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        btnLogInLayout.setVerticalGroup(
+            btnLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnLogInLayout.createSequentialGroup()
+                .addGroup(btnLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(iconEditMataKuliah5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblEditMataKuliah5, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -228,12 +201,12 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(panelLoginLayout.createSequentialGroup()
-                            .addComponent(jLabel8)
+                            .addComponent(lblDaftar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(textNomorIndukLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                            .addComponent(textPasswordLogin, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelLoginLayout.createSequentialGroup()
@@ -247,16 +220,16 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(127, 127, 127)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textNomorIndukLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditMataKuliah5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLoginLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(lblDaftar)
                         .addGap(13, 13, 13)))
                 .addGap(46, 46, 46))
             .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,54 +249,37 @@ public class MainForm extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setText("Nama Lengkap");
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        textNamaLengkapDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        textNamaLengkapDaftar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField2KeyPressed(evt);
+                textNamaLengkapDaftarKeyPressed(evt);
             }
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setText("NIM");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+        textNomorIndukDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        textNomorIndukDaftar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField3KeyPressed(evt);
+                textNomorIndukDaftarKeyPressed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel7.setText("Password");
 
-        jPasswordField2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField2ActionPerformed(evt);
-            }
-        });
-        jPasswordField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        textPasswordDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        textPasswordDaftar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jPasswordField2KeyPressed(evt);
+                textPasswordDaftarKeyPressed(evt);
             }
         });
 
-        btnEditMataKuliah6.setBackground(new java.awt.Color(51, 153, 255));
-        btnEditMataKuliah6.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDaftar.setBackground(new java.awt.Color(51, 153, 255));
+        btnDaftar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah6MouseReleased(evt);
+                btnDaftarMouseClicked(evt);
             }
         });
 
@@ -336,40 +292,28 @@ public class MainForm extends javax.swing.JFrame {
         lblEditMataKuliah6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEditMataKuliah6.setText("Daftar");
 
-        javax.swing.GroupLayout btnEditMataKuliah6Layout = new javax.swing.GroupLayout(btnEditMataKuliah6);
-        btnEditMataKuliah6.setLayout(btnEditMataKuliah6Layout);
-        btnEditMataKuliah6Layout.setHorizontalGroup(
-            btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah6Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnDaftarLayout = new javax.swing.GroupLayout(btnDaftar);
+        btnDaftar.setLayout(btnDaftarLayout);
+        btnDaftarLayout.setHorizontalGroup(
+            btnDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnDaftarLayout.createSequentialGroup()
                 .addComponent(iconEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        btnEditMataKuliah6Layout.setVerticalGroup(
-            btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditMataKuliah6Layout.createSequentialGroup()
-                .addGroup(btnEditMataKuliah6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        btnDaftarLayout.setVerticalGroup(
+            btnDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnDaftarLayout.createSequentialGroup()
+                .addGroup(btnDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(iconEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblEditMataKuliah6, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnEditMataKuliah7.setBackground(new java.awt.Color(236, 240, 241));
-        btnEditMataKuliah7.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBackToLogIn.setBackground(new java.awt.Color(236, 240, 241));
+        btnBackToLogIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnEditMataKuliah7MouseReleased(evt);
+                btnBackToLogInMouseClicked(evt);
             }
         });
 
@@ -377,17 +321,17 @@ public class MainForm extends javax.swing.JFrame {
         iconEditMataKuliah7.setForeground(new java.awt.Color(51, 51, 51));
         iconEditMataKuliah7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        javax.swing.GroupLayout btnEditMataKuliah7Layout = new javax.swing.GroupLayout(btnEditMataKuliah7);
-        btnEditMataKuliah7.setLayout(btnEditMataKuliah7Layout);
-        btnEditMataKuliah7Layout.setHorizontalGroup(
-            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnEditMataKuliah7Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnBackToLogInLayout = new javax.swing.GroupLayout(btnBackToLogIn);
+        btnBackToLogIn.setLayout(btnBackToLogInLayout);
+        btnBackToLogInLayout.setHorizontalGroup(
+            btnBackToLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnBackToLogInLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        btnEditMataKuliah7Layout.setVerticalGroup(
-            btnEditMataKuliah7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnEditMataKuliah7Layout.createSequentialGroup()
+        btnBackToLogInLayout.setVerticalGroup(
+            btnBackToLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnBackToLogInLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -403,13 +347,13 @@ public class MainForm extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addComponent(jLabel6)
                         .addComponent(jLabel7)
-                        .addComponent(jTextField3)
-                        .addComponent(jPasswordField2)
+                        .addComponent(textNomorIndukDaftar)
+                        .addComponent(textPasswordDaftar)
                         .addGroup(panelDaftarLayout.createSequentialGroup()
-                            .addComponent(btnEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBackToLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(56, 56, 56)
-                            .addComponent(btnEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jTextField2))
+                            .addComponent(btnDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textNamaLengkapDaftar))
                     .addComponent(jLabel4))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
@@ -421,19 +365,19 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textNamaLengkapDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(7, 7, 7)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textNomorIndukDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPasswordDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditMataKuliah6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBackToLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
         );
 
@@ -478,13 +422,13 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void daftar() {
-        ReturnLoginJSON json = this.db.daftar(this.jTextField2.getText(), this.jTextField3.getText(), this.jPasswordField2.getText());
+        ReturnLoginJSON json = this.db.daftar(this.textNamaLengkapDaftar.getText(), this.textNomorIndukDaftar.getText(), this.textPasswordDaftar.getText());
         JOptionPane.showMessageDialog(this, json.getMessage());
         if(json.isSuccess()){
             this.session = json.getSession();
-            this.jTextField2.setText("");
-            this.jTextField3.setText("");
-            this.jPasswordField2.setText("");
+            this.textNamaLengkapDaftar.setText("");
+            this.textNomorIndukDaftar.setText("");
+            this.textPasswordDaftar.setText("");
             
             WelcomeForm welcomeForm = new WelcomeForm(this.db, this.session);
             welcomeForm.setVisible(true);
@@ -493,13 +437,13 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void login() {
-        ReturnLoginJSON json = this.db.login(this.jTextField1.getText(), this.jPasswordField1.getText());
+        ReturnLoginJSON json = this.db.login(this.textNomorIndukLogin.getText(), this.textPasswordLogin.getText());
         JOptionPane.showMessageDialog(null, json.getMessage());
         if(json.isSuccess()){
             this.session = json.getSession();
-            this.jTextField1.setText("");
+            this.textNomorIndukLogin.setText("");
         }
-        this.jPasswordField1.setText("");
+        this.textPasswordLogin.setText("");
         
         if(json.isSuccess()){
             
@@ -516,128 +460,64 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
     
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-     
-    }//GEN-LAST:event_formWindowOpened
-
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         if(this.panelLogin.isVisible()) Styling.centeringPanel(this, panelLogin);
         if(this.panelDaftar.isVisible()) Styling.centeringPanel(this, panelDaftar);
     }//GEN-LAST:event_formComponentResized
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
-
-    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+    private void textNomorIndukLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNomorIndukLoginKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.login();
         }
-    }//GEN-LAST:event_jTextField1KeyPressed
+    }//GEN-LAST:event_textNomorIndukLoginKeyPressed
 
-    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+    private void textPasswordLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPasswordLoginKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.login();
         }
-    }//GEN-LAST:event_jPasswordField1KeyPressed
+    }//GEN-LAST:event_textPasswordLoginKeyPressed
 
-    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+    private void textNamaLengkapDaftarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNamaLengkapDaftarKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.daftar();
         }
-    }//GEN-LAST:event_jTextField2KeyPressed
+    }//GEN-LAST:event_textNamaLengkapDaftarKeyPressed
 
-    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+    private void textNomorIndukDaftarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNomorIndukDaftarKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.daftar();
         }
-    }//GEN-LAST:event_jTextField3KeyPressed
+    }//GEN-LAST:event_textNomorIndukDaftarKeyPressed
 
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField2ActionPerformed
-
-    private void jPasswordField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField2KeyPressed
+    private void textPasswordDaftarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPasswordDaftarKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.daftar();
         }
-    }//GEN-LAST:event_jPasswordField2KeyPressed
+    }//GEN-LAST:event_textPasswordDaftarKeyPressed
 
-    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel1MouseEntered
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void lblDaftarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDaftarMouseClicked
         this.panelDaftar.setVisible(true);
         this.panelLogin.setVisible(false);
         
         Styling.refreshSize(this);
-        this.jTextField2.grabFocus();
-    }//GEN-LAST:event_jLabel8MouseClicked
+        this.textNamaLengkapDaftar.grabFocus();
+    }//GEN-LAST:event_lblDaftarMouseClicked
 
-    private void btnEditMataKuliah5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseClicked
+    private void btnLogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogInMouseClicked
         this.login();
-    }//GEN-LAST:event_btnEditMataKuliah5MouseClicked
+    }//GEN-LAST:event_btnLogInMouseClicked
 
-    private void btnEditMataKuliah5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah5MouseEntered
-
-    private void btnEditMataKuliah5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah5MouseExited
-
-    private void btnEditMataKuliah5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah5MousePressed
-
-    private void btnEditMataKuliah5MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah5MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah5MouseReleased
-
-    private void btnEditMataKuliah6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseClicked
+    private void btnDaftarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDaftarMouseClicked
         this.daftar();
-    }//GEN-LAST:event_btnEditMataKuliah6MouseClicked
+    }//GEN-LAST:event_btnDaftarMouseClicked
 
-    private void btnEditMataKuliah6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MouseEntered
-
-    private void btnEditMataKuliah6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MouseExited
-
-    private void btnEditMataKuliah6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MousePressed
-
-    private void btnEditMataKuliah6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah6MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah6MouseReleased
-
-    private void btnEditMataKuliah7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseClicked
+    private void btnBackToLogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackToLogInMouseClicked
         this.panelDaftar.setVisible(false);
         this.panelLogin.setVisible(true);
         
         Styling.refreshSize(this);
-        this.jTextField1.grabFocus();
-    }//GEN-LAST:event_btnEditMataKuliah7MouseClicked
-
-    private void btnEditMataKuliah7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MouseEntered
-
-    private void btnEditMataKuliah7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MouseExited
-
-    private void btnEditMataKuliah7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MousePressed
-
-    private void btnEditMataKuliah7MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMataKuliah7MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditMataKuliah7MouseReleased
+        this.textNomorIndukLogin.grabFocus();
+    }//GEN-LAST:event_btnBackToLogInMouseClicked
 
     /**
      * @param args the command line arguments
@@ -676,15 +556,9 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel btnEditMataKuliah2;
-    private javax.swing.JPanel btnEditMataKuliah3;
-    private javax.swing.JPanel btnEditMataKuliah4;
-    private javax.swing.JPanel btnEditMataKuliah5;
-    private javax.swing.JPanel btnEditMataKuliah6;
-    private javax.swing.JPanel btnEditMataKuliah7;
-    private javax.swing.JLabel iconEditMataKuliah2;
-    private javax.swing.JLabel iconEditMataKuliah3;
-    private javax.swing.JLabel iconEditMataKuliah4;
+    private javax.swing.JPanel btnBackToLogIn;
+    private javax.swing.JPanel btnDaftar;
+    private javax.swing.JPanel btnLogIn;
     private javax.swing.JLabel iconEditMataKuliah5;
     private javax.swing.JLabel iconEditMataKuliah6;
     private javax.swing.JLabel iconEditMataKuliah7;
@@ -695,18 +569,15 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JLabel lblEditMataKuliah2;
-    private javax.swing.JLabel lblEditMataKuliah3;
-    private javax.swing.JLabel lblEditMataKuliah4;
+    private javax.swing.JLabel lblDaftar;
     private javax.swing.JLabel lblEditMataKuliah5;
     private javax.swing.JLabel lblEditMataKuliah6;
     private javax.swing.JPanel panelDaftar;
     private javax.swing.JPanel panelLogin;
+    private javax.swing.JTextField textNamaLengkapDaftar;
+    private javax.swing.JTextField textNomorIndukDaftar;
+    private javax.swing.JTextField textNomorIndukLogin;
+    private javax.swing.JPasswordField textPasswordDaftar;
+    private javax.swing.JPasswordField textPasswordLogin;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,5 @@
 package backend;
 
-import java.util.ArrayList;
-
 public class MataKuliah {
     private String idMatkul;
     private String namaMatkul;
