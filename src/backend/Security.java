@@ -2,8 +2,8 @@ package backend;
 
 import java.util.HashMap;
 
-public class Security {
-    private HashMap<Character, Character> lib;
+public class Security extends MySQLUtils{
+    private final HashMap<Character, Character> lib;
     
     public Security() {
         this.lib = new HashMap();
@@ -38,4 +38,11 @@ public class Security {
         
         return hashed;
     }
+    
+    public boolean CekNim (String nim){
+//        String cek = nim.substring(0, 2)
+        return nim.substring(0, 2).equals("14");
+        
+    }
+    
 }
