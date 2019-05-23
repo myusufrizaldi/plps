@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 
 
-public class MainForm extends javax.swing.JFrame {
+public class DaftarForm extends javax.swing.JFrame {
 
     private Dimension screenSize;
     private Database db;
@@ -35,10 +35,10 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
-    public MainForm() {
+    public DaftarForm() {
         //hai
         initComponents();
-        this.icon = new ImageIcon(MainForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
+        this.icon = new ImageIcon(DaftarForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
         this.setIconImage(this.icon.getImage());
         
         this.setMinimumSize(Styling.WXGA_SCREEN);
@@ -48,8 +48,8 @@ public class MainForm extends javax.swing.JFrame {
         this.security = new Security();
         this.session = new Session();
         
-        this.panelLogin.setVisible(true);
-        this.panelDaftar.setVisible(false);
+        this.panelLogin.setVisible(false);
+        this.panelDaftar.setVisible(true);
     }
 
     /**
@@ -67,6 +67,7 @@ public class MainForm extends javax.swing.JFrame {
         textNomorIndukLogin = new CustomTextField();
         jLabel3 = new javax.swing.JLabel();
         textPasswordLogin = new CustomPasswordField();
+        lblDaftar = new javax.swing.JLabel();
         btnLogIn = new CustomPrimaryButton();
         this.bImage = null;
         try {
@@ -122,7 +123,7 @@ public class MainForm extends javax.swing.JFrame {
         panelLogin.setPreferredSize(new java.awt.Dimension(400, 560));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("NIA/NIM/NIP");
+        jLabel1.setText("Admin/NIM/NIP");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel2.setText("LOGIN");
@@ -141,6 +142,16 @@ public class MainForm extends javax.swing.JFrame {
         textPasswordLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textPasswordLoginKeyPressed(evt);
+            }
+        });
+
+        lblDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblDaftar.setForeground(new java.awt.Color(51, 153, 255));
+        lblDaftar.setText("Daftar");
+        lblDaftar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblDaftar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDaftarMouseClicked(evt);
             }
         });
 
@@ -189,7 +200,10 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelLoginLayout.createSequentialGroup()
+                            .addComponent(lblDaftar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(textNomorIndukLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                             .addComponent(textPasswordLogin, javax.swing.GroupLayout.Alignment.LEADING))))
@@ -212,7 +226,11 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLoginLayout.createSequentialGroup()
+                        .addComponent(lblDaftar)
+                        .addGap(13, 13, 13)))
                 .addGap(46, 46, 46))
             .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelLoginLayout.createSequentialGroup()
@@ -490,6 +508,14 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textPasswordDaftarKeyPressed
 
+    private void lblDaftarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDaftarMouseClicked
+        this.panelDaftar.setVisible(true);
+        this.panelLogin.setVisible(false);
+        
+        Styling.refreshSize(this);
+        this.textNamaLengkapDaftar.grabFocus();
+    }//GEN-LAST:event_lblDaftarMouseClicked
+
     private void btnLogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogInMouseClicked
         this.login();
     }//GEN-LAST:event_btnLogInMouseClicked
@@ -509,38 +535,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainForm().setVisible(true);
-                
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnBackToLogIn;
@@ -556,6 +551,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblDaftar;
     private javax.swing.JLabel lblEditMataKuliah5;
     private javax.swing.JLabel lblEditMataKuliah6;
     private javax.swing.JPanel panelDaftar;

@@ -18,14 +18,14 @@ import javax.swing.JPanel;
 
 
 
-public class MainForm extends javax.swing.JFrame {
+public class DaftarDosenForm extends javax.swing.JFrame {
 
     private Dimension screenSize;
     private Database db;
     private Session session;
     private Security security;
     private ImageIcon icon;
-    
+    int id_fokus=0;
     private BufferedImage bImage;
     private ImageIcon iconLogin;
     private ImageIcon iconRegister;
@@ -35,10 +35,10 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
-    public MainForm() {
+    public DaftarDosenForm() {
         //hai
         initComponents();
-        this.icon = new ImageIcon(MainForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
+        this.icon = new ImageIcon(DaftarDosenForm.class.getResource("/res/LOGO-StudyAdvisor.png"));
         this.setIconImage(this.icon.getImage());
         
         this.setMinimumSize(Styling.WXGA_SCREEN);
@@ -48,8 +48,13 @@ public class MainForm extends javax.swing.JFrame {
         this.security = new Security();
         this.session = new Session();
         
-        this.panelLogin.setVisible(true);
-        this.panelDaftar.setVisible(false);
+        this.panelLogin.setVisible(false);
+        this.panelDaftar.setVisible(true);
+        
+        db.showComboFokusDaftarDosen(this);
+        
+//           CmbFokus.setSelectedIndex(id_fokus);
+
     }
 
     /**
@@ -67,6 +72,7 @@ public class MainForm extends javax.swing.JFrame {
         textNomorIndukLogin = new CustomTextField();
         jLabel3 = new javax.swing.JLabel();
         textPasswordLogin = new CustomPasswordField();
+        lblDaftar = new javax.swing.JLabel();
         btnLogIn = new CustomPrimaryButton();
         this.bImage = null;
         try {
@@ -107,6 +113,8 @@ public class MainForm extends javax.swing.JFrame {
             System.out.println(ex.toString());
         }
         iconEditMataKuliah7 = new javax.swing.JLabel(this.iconBack);
+        jLabel8 = new javax.swing.JLabel();
+        CmbFokus = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rancreid Study Advisor: Informatics Engineering");
@@ -122,7 +130,7 @@ public class MainForm extends javax.swing.JFrame {
         panelLogin.setPreferredSize(new java.awt.Dimension(400, 560));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("NIA/NIM/NIP");
+        jLabel1.setText("Admin/NIM/NIP");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel2.setText("LOGIN");
@@ -141,6 +149,16 @@ public class MainForm extends javax.swing.JFrame {
         textPasswordLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textPasswordLoginKeyPressed(evt);
+            }
+        });
+
+        lblDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblDaftar.setForeground(new java.awt.Color(51, 153, 255));
+        lblDaftar.setText("Daftar");
+        lblDaftar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblDaftar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDaftarMouseClicked(evt);
             }
         });
 
@@ -185,11 +203,14 @@ public class MainForm extends javax.swing.JFrame {
             panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLoginLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1)
+                    .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(panelLoginLayout.createSequentialGroup()
+                            .addComponent(lblDaftar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(textNomorIndukLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                             .addComponent(textPasswordLogin, javax.swing.GroupLayout.Alignment.LEADING))))
@@ -212,7 +233,11 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLoginLayout.createSequentialGroup()
+                        .addComponent(lblDaftar)
+                        .addGap(13, 13, 13)))
                 .addGap(46, 46, 46))
             .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelLoginLayout.createSequentialGroup()
@@ -226,7 +251,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel4.setText("DAFTAR");
+        jLabel4.setText("DAFTAR DOSEN");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setText("Nama Lengkap");
@@ -239,7 +264,7 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel6.setText("NIM");
+        jLabel6.setText("NIP");
 
         textNomorIndukDaftar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         textNomorIndukDaftar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -318,6 +343,25 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(iconEditMataKuliah7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel8.setText("Fokus ");
+
+        CmbFokus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbFokusItemStateChanged(evt);
+            }
+        });
+        CmbFokus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CmbFokusMouseClicked(evt);
+            }
+        });
+        CmbFokus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CmbFokusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelDaftarLayout = new javax.swing.GroupLayout(panelDaftar);
         panelDaftar.setLayout(panelDaftarLayout);
         panelDaftarLayout.setHorizontalGroup(
@@ -325,18 +369,20 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(panelDaftarLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
                     .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5)
+                        .addComponent(jLabel8)
                         .addComponent(jLabel6)
-                        .addComponent(jLabel7)
+                        .addComponent(textNamaLengkapDaftar)
+                        .addComponent(jLabel5)
                         .addComponent(textNomorIndukDaftar)
-                        .addComponent(textPasswordDaftar)
                         .addGroup(panelDaftarLayout.createSequentialGroup()
                             .addComponent(btnBackToLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(56, 56, 56)
                             .addComponent(btnDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(textNamaLengkapDaftar))
-                    .addComponent(jLabel4))
+                        .addComponent(jLabel4)
+                        .addComponent(textPasswordDaftar)
+                        .addComponent(CmbFokus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
         panelDaftarLayout.setVerticalGroup(
@@ -344,19 +390,23 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(panelDaftarLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel4)
-                .addGap(38, 38, 38)
-                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textNamaLengkapDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addGap(7, 7, 7)
-                .addComponent(textNomorIndukDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textNomorIndukDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(CmbFokus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addGap(7, 7, 7)
                 .addComponent(textPasswordDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addGroup(panelDaftarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBackToLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -370,9 +420,9 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(324, 324, 324)
                 .addComponent(panelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(51, 51, 51)
                 .addComponent(panelDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,16 +454,20 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void daftar() {
-        ReturnLoginJSON json = this.db.daftar(this.textNamaLengkapDaftar.getText(), this.textNomorIndukDaftar.getText(), this.textPasswordDaftar.getText());
+        System.out.println("idf="+id_fokus);
+        ReturnLoginJSON json = this.db.daftarDosen(this.textNamaLengkapDaftar.getText(), this.textNomorIndukDaftar.getText(), this.textPasswordDaftar.getText(),id_fokus);
         JOptionPane.showMessageDialog(this, json.getMessage());
+        
+        System.out.println("json="+json.getMessage());
         if(json.isSuccess()){
             this.session = json.getSession();
             this.textNamaLengkapDaftar.setText("");
             this.textNomorIndukDaftar.setText("");
             this.textPasswordDaftar.setText("");
+            this.CmbFokus.removeAllItems();
             
-            WelcomeForm welcomeForm = new WelcomeForm(this.db, this.session);
-            welcomeForm.setVisible(true);
+            DosenForm DosenForm = new DosenForm(this.db, this.session);
+            DosenForm.setVisible(true);
             this.dispose();
         }
     }
@@ -490,6 +544,14 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_textPasswordDaftarKeyPressed
 
+    private void lblDaftarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDaftarMouseClicked
+        this.panelDaftar.setVisible(true);
+        this.panelLogin.setVisible(false);
+        
+        Styling.refreshSize(this);
+        this.textNamaLengkapDaftar.grabFocus();
+    }//GEN-LAST:event_lblDaftarMouseClicked
+
     private void btnLogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogInMouseClicked
         this.login();
     }//GEN-LAST:event_btnLogInMouseClicked
@@ -506,43 +568,39 @@ public class MainForm extends javax.swing.JFrame {
         this.textNomorIndukLogin.grabFocus();
     }//GEN-LAST:event_btnBackToLogInMouseClicked
 
+    private void CmbFokusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbFokusActionPerformed
+        // TODO add your handling code here:
+//         CmbFokus.setSelectedIndex(id_fokus);
+       
+//         CmbFokus.setSelectedIndex(id_fokus);
+        
+    }//GEN-LAST:event_CmbFokusActionPerformed
+
+    private void CmbFokusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CmbFokusMouseClicked
+        // TODO add your handling code here:
+         CmbFokus.removeAllItems();     
+         
+         db.showComboFokusDaftarDosen(this);   
+//        int id_fokus=CmbFokus.getSelectedIndex()+1;
+           
+//           CmbFokus.setSelectedIndex(id_fokus);
+        
+        Styling.refreshSize(this);   
+    }//GEN-LAST:event_CmbFokusMouseClicked
+
+    private void CmbFokusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbFokusItemStateChanged
+        // TODO add your handling code here:
+        id_fokus = CmbFokus.getSelectedIndex()+1;
+           System.out.println("id"+id_fokus);
+    }//GEN-LAST:event_CmbFokusItemStateChanged
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainForm().setVisible(true);
-                
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JComboBox CmbFokus;
     private javax.swing.JPanel btnBackToLogIn;
     private javax.swing.JPanel btnDaftar;
     private javax.swing.JPanel btnLogIn;
@@ -556,6 +614,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel lblDaftar;
     private javax.swing.JLabel lblEditMataKuliah5;
     private javax.swing.JLabel lblEditMataKuliah6;
     private javax.swing.JPanel panelDaftar;

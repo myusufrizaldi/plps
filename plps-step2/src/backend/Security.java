@@ -38,11 +38,12 @@ public class Security extends MySQLUtils{
         
         return hashed;
     }
-    
     public boolean CekNim (String nim){
 //        String cek = nim.substring(0, 2)
-        return nim.substring(0, 2).equals("14");
+        if(nim.substring(0, 2).equals("14")){
+            return true;
+        }
+        else return false;
         
-    }
-    
+}
 }
