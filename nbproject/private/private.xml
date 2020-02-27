@@ -3,17 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/MySQLUtils.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/MataKuliah.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/frontend/PerangkatLunakPerencanaanStudi.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/AmbilMataKuliah.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/Session.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/Database.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/Dosen.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/Mahasiswa.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/Security.java</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/res/LOGO-StudyAdvisor.png</file>
-            <file>file:/C:/Users/asus/Documents/NetBeansProjects/plps-step2/src/backend/ReturnLoginJSON.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/frontend/WelcomeForm.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/frontend/DosenForm.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/Account.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/Akademika.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/Dosen.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/Session.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/AmbilMataKuliah.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/frontend/MainForm.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/Mahasiswa.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/component/CustomDangerButton.java</file>
+            <file>file:/D:/Projects/GitHub/plps/src/backend/Database.java</file>
         </group>
     </open-files>
 </project-private>

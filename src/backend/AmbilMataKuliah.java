@@ -13,19 +13,19 @@ public class AmbilMataKuliah {
         this.calculatePoint();
     }
     
-    public double convertNilai (){
+    public static double convertNilai (String nilai){
         double score = 0;
-        if( this.nilai.equals("A")){
+        if(nilai.equals("A")){
             score = 4;
-        } else if( this.nilai.equals("AB") ){
+        } else if(nilai.equals("AB") ){
             score = 3.5;
-        } else if( this.nilai.equals("B")){
+        } else if(nilai.equals("B")){
             score = 3;
-        } else if( this.nilai.equals("BC") ){
+        } else if(nilai.equals("BC") ){
             score = 2.5;
-        } else if( this.nilai.equals("C") ){
+        } else if(nilai.equals("C") ){
             score = 2;
-        } else if( this.nilai.equals("D") ){
+        } else if(nilai.equals("D") ){
             score = 1;        
         }
         
@@ -33,8 +33,8 @@ public class AmbilMataKuliah {
     }
     
     public void calculatePoint() {
-        this.logicPoint = this.convertNilai() * this.mataKuliah.getLogicPointRate();
-        this.mathPoint = this.convertNilai() * this.mataKuliah.getMathPointRate();
-        this.memoryPoint = this.convertNilai() * this.mataKuliah.getMemoryPointRate();
+        this.logicPoint = this.convertNilai(this.nilai) * this.mataKuliah.getLogicPointRate();
+        this.mathPoint = this.convertNilai(this.nilai) * this.mataKuliah.getMathPointRate();
+        this.memoryPoint = this.convertNilai(this.nilai) * this.mataKuliah.getMemoryPointRate();
     }
 }

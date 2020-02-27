@@ -1,35 +1,40 @@
 package backend;
 
-import java.util.ArrayList;
-
 public class MataKuliah {
     private String idMatkul;
-    private String nama;
+    private String namaMatkul;
+    private int sks;
     private int semester;
     private boolean wajib;
     private int prioritas;
-    private ArrayList<String> idMatkulSyarat;
     private double logicPointRate;
     private double mathPointRate;
     private double memoryPointRate;
     
-    public MataKuliah (String idMatkul, String nama, int semester, boolean wajib, int prioritas, ArrayList<String> idMatkulSyarat) {
+    public MataKuliah (String idMatkul, String namaMatkul, int sks, int semester, boolean wajib, int prioritas, double logicPointRate, double mathPointRate, double memoryPointRate) {
         this.idMatkul = idMatkul;
-        this.nama = nama;
+        this.namaMatkul = namaMatkul;
+        this.sks = sks;
         this.semester = semester;
         this.wajib = wajib;
         this.prioritas = prioritas;
-        this.idMatkulSyarat = idMatkulSyarat;
+        this.logicPointRate = logicPointRate;
+        this.mathPointRate = mathPointRate;
+        this.memoryPointRate = memoryPointRate;
     }
 
     public String getIdMatkul() {
         return this.idMatkul;
     }
 
-    public String getNama() {
-        return this.nama;
+    public String getNamaMatkul() {
+        return this.namaMatkul;
     }
 
+    public int getSks() {
+        return this.sks;
+    }
+    
     public int getSemester() {
         return this.semester;
     }
@@ -52,13 +57,6 @@ public class MataKuliah {
 
     public double getMemoryPointRate() {
         return this.memoryPointRate;
-    }
-
-    
-    
-    public ArrayList<String> getIdMatkulSyarat() {
-        return this.idMatkulSyarat;
-    }
-    
+    }    
     
 }
