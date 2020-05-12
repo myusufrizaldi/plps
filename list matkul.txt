@@ -1,12 +1,12 @@
 	
-IF1101	Pengenalan Prodi Teknik Informatika	2	1	1	1	30	30	40
-IF1121	Algoritma Pemrograman 1	3	1	1	2	60	10	30
-KU1102	Pengantar Komputer & Software I	2	1	1	3	30	30	40
-MA1101A	Matematika IB	4	1	1	4	40	40	20
-KU1101	Bahasa Indonesia	2	1	1	5	30	0	70
-FI1101A	Fisika Dasar IB	4	1	1	6	40	30	30
-KI1102	Kimia Dasar IB	2	1	1	7	40	20	40
-BI1103	Biologi Dasar 1B	2	1	1	8	20	20	60
+IF1101	Pengenalan Prodi Teknik Informatika		2	1	1	1	30	30	40
+IF1121	Algoritma Pemrograman 1 			3	1	1	2	60	10	30
+KU1102	Pengantar Komputer & Software I			2	1	1	3	30	30	40
+MA1101A	Matematika IB					4	1	1	4	40	40	20
+KU1101	Bahasa Indonesia				2	1	1	5	30	0	70
+FI1101A	Fisika Dasar IB					4	1	1	6	40	30	30
+KI1102	Kimia Dasar IB					2	1	1	7	40	20	40
+BI1103	Biologi Dasar 1B				2	1	1	8	20	20	60	
 Tot. Matkul = 8
 
 KU1202	Pengantar Komputer dan Software II		2	2	1	9	

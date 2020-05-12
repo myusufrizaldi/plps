@@ -1,7 +1,11 @@
 package backend;
+import backend.Security;
+import frontend.MsgBox;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Database {
@@ -47,19 +51,12 @@ public class Database {
         }
     }
     
-    public boolean execute (String query) {
-        boolean success = false;
+    public void execute (String query) {
         try {
-            success = this.statement.execute(query);
+            this.statement.execute(query);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-        
-        return success;
-    }
-    
-    public ResultSet getResult () {
-        return this.result;
     }
     
     private void importTabelDosen() {
@@ -90,34 +87,6 @@ public class Database {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
-    }
-    
-    public ArrayList<MataKuliah> importTabelMataKuliah(){
-        ArrayList<MataKuliah> mataKuliah = new ArrayList();
-        this.runQuery("SELECT * FROM matkul");
-        try {
-            while(this.result.next()){
-                mataKuliah.add(new MataKuliah(this.result.getString("id_matkul"), this.result.getString("nama"), Integer.parseInt(this.result.getString("sks")), Integer.parseInt(this.result.getString("semester")), ((this.result.getString("wajib").equals("1"))), Integer.parseInt(this.result.getString("prioritas")), Double.parseDouble(this.result.getString("logic_point_rate")), Double.parseDouble(this.result.getString("math_point_rate")), Double.parseDouble(this.result.getString("memory_point_rate"))));
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.toString());
-        }
-        
-        return mataKuliah;
-    }
-    
-    public HashMap<String, MataKuliah> importHashMapMataKuliah(){
-        HashMap<String, MataKuliah> mataKuliah = new HashMap();
-        this.runQuery("SELECT * FROM matkul");
-        try {
-            while(this.result.next()){
-                mataKuliah.put(this.result.getString("id_matkul"), new MataKuliah(this.result.getString("id_matkul"), this.result.getString("nama"), Integer.parseInt(this.result.getString("sks")), Integer.parseInt(this.result.getString("semester")), ((this.result.getString("wajib").equals("1"))), Integer.parseInt(this.result.getString("prioritas")), Double.parseDouble(this.result.getString("logic_point_rate")), Double.parseDouble(this.result.getString("math_point_rate")), Double.parseDouble(this.result.getString("memory_point_rate"))));
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.toString());
-        }
-        
-        return mataKuliah;
     }
     
     public ReturnLoginJSON login (String nomorInduk, String password) {
